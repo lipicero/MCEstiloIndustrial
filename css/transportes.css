@@ -23,7 +23,20 @@
 *::after {
   box-sizing: border-box;
 }
+.nav-menu li a {
+  /* elimina el highlight azul al tocar en WebKit (iOS/Android) */
+  -webkit-tap-highlight-color: transparent;
+  /* quita outline/focus default */
+  outline: none;
+  /* evita el pulsing de Android */
+  touch-action: manipulation;
+}
 
+/* y asegúrate de que el foco no pinte nada raro */
+.nav-menu li a:focus {
+  background: none;
+  outline: none;
+}
 body {
   margin: 0;
   font: 400 1rem/1.5 'Open Sans', sans-serif;
