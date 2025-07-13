@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnTop = document.getElementById('scroll-top');
   if (btnTop) {
     window.addEventListener('scroll', () => {
-      btnTop.classList.toggle('show', window.scrollY > 200);
+      btnTop.classList.toggle('show', window.scrollY > 100);
     });
     btnTop.addEventListener('click', () =>
       window.scrollTo({ top: 0, behavior: 'smooth' })
