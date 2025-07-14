@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const menu = document.querySelector('.nav-menu');
   if (btn && menu) {
     btn.setAttribute('aria-expanded', 'false');
-
     const toggleMenu = e => {
       e.preventDefault();
       const expanded = btn.getAttribute('aria-expanded') === 'true';
@@ -14,10 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.toggle('open');
       btn.blur();
     };
-
     btn.addEventListener('click',    toggleMenu);
     btn.addEventListener('touchend', toggleMenu);
-
     // Cerrar menú al tocar fuera
     const closeMenu = e => {
       if (!btn.classList.contains('open')) return;
@@ -30,14 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchend', closeMenu);
   }
 
-  // ————————— 2. Fade-in al scroll —————————
+  // ————————— 2. Fade-in al hacer scroll (con delay escalonado) —————————
+  const fadeEls = document.querySelectorAll('.fade-in');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
+    entries.forEach((entry, idx) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay =
+          entry.target.dataset.delay
+            ? entry.target.dataset.delay + 's'
+            : (idx * 0.15) + 's';
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Solo una vez
+      }
     });
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.fade-in')
-          .forEach(el => observer.observe(el));
+  }, { threshold: 0.18 });
+  fadeEls.forEach(el => observer.observe(el));
 
   // ————————— 3. Loader + fade-out en navegación —————————
   const loader = document.getElementById('page-loader');
@@ -57,22 +61,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const form       = document.getElementById('contact-form');
   const spinner    = document.getElementById('form-spinner');
   const feedbackEl = document.getElementById('form-feedback');
-
   if (form && spinner && feedbackEl) {
     form.addEventListener('submit', async e => {
       e.preventDefault();
       feedbackEl.textContent = '';
       feedbackEl.className   = 'form-feedback';
-
       if (!form.checkValidity()) {
         feedbackEl.textContent = 'Por favor completa todos los campos obligatorios.';
         feedbackEl.classList.add('error');
         return;
       }
-
       spinner.hidden = false;
       form.querySelector('button[type=submit]').disabled = true;
-
       try {
         const res  = await fetch(form.action, {
           method: 'POST',
@@ -113,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleDesktopNav = () => {
     if (!menu) return;
     if (window.innerWidth >= 769) {
-      // dispara la animación de los <li>
       menu.classList.add('nav-menu--visible');
     } else {
       menu.classList.remove('nav-menu--visible');
@@ -121,6 +120,54 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   handleDesktopNav();
   window.addEventListener('resize', handleDesktopNav);
+
+  // ————————— 7. MODAL/LIGHTBOX para Galería —————————
+  const galeria = document.querySelector('.galeria');
+  if (galeria) {
+    // Crea el modal solo una vez
+    let modal = document.querySelector('.modal-img');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.className = 'modal-img';
+      modal.innerHTML = `
+        <span class="modal-close" title="Cerrar">&times;</span>
+        <img src="" alt="Imagen ampliada">
+      `;
+      document.body.appendChild(modal);
+    }
+    const modalImg  = modal.querySelector('img');
+    const modalClose = modal.querySelector('.modal-close');
+
+    // Abre el modal al clickear la imagen
+    galeria.addEventListener('click', function (e) {
+      const target = e.target;
+      if (target.tagName === 'IMG') {
+        modalImg.src = target.src;
+        modalImg.alt = target.alt || 'Imagen ampliada';
+        modal.style.display = 'flex';
+        setTimeout(() => { modal.classList.add('open'); }, 10);
+      }
+    });
+    // Cierra el modal en la X o fondo oscuro
+    function cerrarModal(e) {
+      if (
+        e.target === modal || // click en fondo
+        e.target === modalClose // click en la X
+      ) {
+        modal.classList.remove('open');
+        setTimeout(() => { modal.style.display = 'none'; }, 200);
+      }
+    }
+    modal.addEventListener('click', cerrarModal);
+    modalClose.addEventListener('click', cerrarModal);
+    // Cierra con Esc
+    document.addEventListener('keydown', (e) => {
+      if (modal.style.display === 'flex' && e.key === 'Escape') {
+        modal.classList.remove('open');
+        setTimeout(() => { modal.style.display = 'none'; }, 200);
+      }
+    });
+  }
 });
 
 // Asegura ocultar el loader luego de cargar todos los recursos
