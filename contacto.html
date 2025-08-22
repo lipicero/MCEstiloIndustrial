@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MC Estilo Industrial</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="stylesheet" href="css/normalize.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- Loader -->
+  <div id="page-loader" class="loader">
+    <div class="spinner"></div>
+  </div>
+  <header>
+    <div class="holder fade-in">
+      <img src="img/logo.png" class="img-logo" alt="logo mcestiloindustrial" />
+      <h1>MC Estilo Industrial</h1>
+    </div>
+  </header>
+  <nav>
+    <div class="holder nav-container">
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="galeria.html">Galería</a></li>
+        <li><a class="activo" href="contacto.html">Contacto</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <main class="holder contacto">
+    <div class="form-container fade-in">
+      <h2>¡Hablemos!</h2>
+      <p class="mensaje-bienvenida">
+        ¿Tenés una idea, consulta o querés un presupuesto?
+        Escribinos y te respondemos en menos de 24 horas.
+      </p>
+      <form id="contact-form" class="formulario" action="https://formspree.io/f/xanogqro" method="POST">
+        <div class="form-group">
+          <label for="name"><span class="icon">👤</span> Nombre *</label>
+          <input type="text" id="name" name="name" required placeholder="Tu nombre">
+        </div>
+        <div class="form-group">
+          <label for="email"><span class="icon">✉️</span> Email *</label>
+          <input type="email" id="email" name="email" required placeholder="tu@ejemplo.com">
+        </div>
+        <div class="form-group">
+          <label for="phone"><span class="icon">📞</span> Teléfono</label>
+          <input type="tel" id="phone" name="phone" placeholder="+54 9 11 1234 5678">
+        </div>
+        <div class="form-group">
+          <label for="message"><span class="icon">💬</span> Mensaje *</label>
+          <textarea id="message" name="message" required rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+        </div>
+        <input type="hidden" name="_language" value="es" />
+        <div class="form-group submit-group">
+          <button type="submit" class="btn-enviar">Enviar mensaje</button>
+          <div id="form-spinner" class="spinner" hidden></div>
+        </div>
+        <div id="form-feedback" class="form-feedback"></div>
+      </form>
+    </div>
+    <div class="datos fade-in">
+      <h2>Otras vías de contacto</h2>
+      <ul class="icon-list">
+        <li> <a href="https://wa.me/5493772636000?text=%C2%A1Hola!" target="_blank">
+            <span class="icon-wsp"></span> WhatsApp
+          </a></li>
+        <li> <a href="https://www.instagram.com/mc_estilo.industrial" target="_blank">
+            <span class="icon-ig"></span> Instagram
+          </a></li>
+      </ul>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6967.436750341601!2d-56.64325400478516!3d-29.172970163883875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945461e42dd25c45%3A0xfb6a0eca2b1cfc48!2sMC%20Estilo%20Industrial!5e0!3m2!1ses-419!2sar!4v1752366386898!5m2!1ses-419!2sar"
+        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" class="mapa-contacto"></iframe>
+    </div>
+  </main>
+
+  <footer>
+    <div class="holder">Diseñado por Matías Ceroleni <br>&COPY; 2025</div>
+  </footer>
+  <button id="scroll-top" aria-label="Volver arriba">↑</button>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

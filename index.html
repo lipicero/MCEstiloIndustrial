@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MC Estilo Industrial</title>
+  <link rel="icon" href="img/favicon.ico">
+  <link rel="stylesheet" href="css/normalize.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- Loader -->
+  <div id="page-loader" class="loader">
+    <div class="spinner"></div>
+  </div>
+  <header>
+    <div class="holder fade-in">
+      <img src="img/logo.png" class="img-logo" alt="logo mcestiloindustrial" />
+      <h1>MC Estilo Industrial</h1>
+    </div>
+  </header>
+  <nav>
+    <div class="holder nav-container">
+      <ul class="nav-menu">
+        <li><a class="activo" href="index.html">Home</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="galeria.html">Galería</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <main class="holder">
+    <div>
+      <img src="img/home/img02.jpg" class="fade-in" alt="">
+    </div>
+    <div class="columnas">
+      <section class="bienvenidos fade-in">
+        <h2>Bienvenido!</h2>
+        <p>
+          Descubrí inspiración y soluciones únicas en hierro y madera.<br>
+          Mirá nuestros trabajos y encontrá la idea perfecta para tu espacio.
+        </p>
+      </section>
+    </div>
+    <!-- Beneficios -->
+    <section class="beneficios fade-in">
+      <div class="beneficio">
+        <span class="icon-material"></span>
+        <h3>Materiales Premium</h3>
+        <p>Usamos acero y madera de primera calidad.</p>
+      </div>
+      <div class="beneficio">
+        <span class="icon-personalizado"></span>
+        <h3>Diseño a Medida</h3>
+        <p>Fabricamos lo que imaginás, adaptado a tu espacio.</p>
+      </div>
+      <div class="beneficio">
+        <span class="icon-tiempo"></span>
+        <h3>Entrega Puntual</h3>
+        <p>Compromiso real con tus tiempos de entrega.</p>
+      </div>
+      <div class="beneficio">
+        <span class="icon-atencion"></span>
+        <h3>Atención Personalizada</h3>
+        <p>Estamos en cada paso, desde la consulta hasta la instalación.</p>
+      </div>
+    </section>
+
+    <!-- Slider imagenes -->
+    <section class="slider-holder fade-in">
+      <div class="slider" id="galeria-slider">
+        <button class="slider-btn prev" aria-label="Anterior">
+          <span class="slider-btn-inner">
+            <svg width="20" height="20" viewBox="0 0 24 24" style="display:block;" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </span>
+        </button>
+        <div class="slider-track">
+          <img src="img/galeria/img1.webp" alt="Mueble de hierro y madera">
+          <img src="img/galeria/img2.webp" alt="Portón moderno a medida">
+          <img src="img/galeria/img3.webp" alt="Estantería industrial">
+        </div>
+        <button class="slider-btn next" aria-label="Siguiente">
+          <span class="slider-btn-inner">
+            <svg width="20" height="20" viewBox="0 0 24 24" style="display:block;" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <polyline points="9 6 15 12 9 18" />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div class="slider-dots" id="slider-dots"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="holder">Diseñado por Matías Ceroleni <br>&COPY; 2025</div>
+  </footer>
+
+  <button id="scroll-top" aria-label="Volver arriba">↑</button>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
