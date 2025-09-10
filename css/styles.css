@@ -616,24 +616,6 @@ h2 {
   opacity: 0.8;
 }
 
-/* Overlay de carga de página completo (#page-loader) */
-#page-loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(255, 255, 255, 0.9);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-
-#page-loader.visible {
-  display: flex;
-}
-
 /* Botón flotante para volver arriba */
 #scroll-top {
   position: fixed;
