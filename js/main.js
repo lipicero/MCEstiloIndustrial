@@ -50,23 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(el);
   });
 
-  // 3. Loader en navegación interna
-  var loader = document.getElementById('page-loader');      // Selecciona el indicador de carga
-  if (loader) {                                             // Si existe
-    var links = document.querySelectorAll('.nav-menu li a');// Selecciona todos los enlaces del menú
-    links.forEach(function (link) {
-      if (link.origin !== location.origin) return;         // Solo aplica a enlaces internos
-      link.addEventListener('click', function (e) {         // Al hacer clic en un enlace
-        e.preventDefault();                                // Cancela la navegación inmediata
-        loader.classList.add('visible');                   // Muestra el loader
-        document.body.classList.add('fade-out');           // Aplica efecto fade-out al contenido
-        setTimeout(function () {
-          window.location.href = link.href;                // Navega al link tras 250ms
-        }, 250);
-      });
-    });
-  }
-
   // 4. Formulario con Formspree
   var form = document.getElementById('contact-form');       // Selecciona el formulario de contacto
   var spinner = document.getElementById('form-spinner');    // Selecciona el spinner de carga
