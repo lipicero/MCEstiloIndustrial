@@ -1,0 +1,71 @@
+:root {
+    /* Variables de tema: colores, tipografías y medidas reutilizables */
+    --charcoal: #2c2c2c;
+    --slate: #4a4a4a;
+    --silver: #cfcfcf;
+    --wood-accent: #a67c52;
+    --white: #ffffff;
+    --text-dark: #333333;
+    --text-light: #f5f5f5;
+    --esp: 1rem;
+    --max-w: 960px;
+}
+
+/* Reset de box-sizing para un layout predecible */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+/* Tipografía y fondo global del sitio */
+body {
+  margin: 0;
+  font: 400 1rem/1.5 'Open Sans', sans-serif;
+  color: var(--text-dark);
+  background: var(--white);
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+/* Contenedor ancho máximo reutilizable */
+.holder {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--esp);
+}
+/* Accesibilidad: respeta usuarios con animaciones reducidas */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.nav-menu li a:hover,
+.btn:hover,
+.btn-enviar:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+/* Mejora de UX en móviles: quitar destello/tap highlight y outlines en enlaces/botones del menú */
+button,
+a,
+.nav-menu li a {
+  -webkit-tap-highlight-color: transparent;
+}
+button:focus,
+a:focus,
+.slider-btn:focus,
+.nav-menu li a:focus {
+  outline: none;
+  box-shadow: none;
+}
+/* Transiciones comunes para enlaces de menú y botones */
+.nav-menu li a,
+.btn,
+.btn-enviar {
+  display: inline-block;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}

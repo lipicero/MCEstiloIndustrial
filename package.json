@@ -1,0 +1,10 @@
+{
+    "name": "MCEstilo-Industrial",
+    "version": "2.0.0",
+    "scripts": {
+        "start": "concurrently \"npm start --prefix frontend\""
+    },
+    "devDependencies": {
+        "concurrently": "^8.0.0"
+    }
+}

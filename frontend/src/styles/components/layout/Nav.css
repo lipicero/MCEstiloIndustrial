@@ -1,0 +1,323 @@
+
+
+/* Mejora de UX en móviles: quitar destello/tap highlight y outlines en enlaces/botones del menú */
+a,
+.nav-menu li a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:focus,
+.slider-btn:focus,
+.nav-menu li a:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.nav-menu li a {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  touch-action: manipulation;
+}
+
+.nav-menu li a:focus {
+  background: none;
+  outline: none;
+}
+
+/* Barra de navegación principal (contenedor) */
+nav {
+  background-color: var(--slate);
+  margin-bottom: var(--esp);
+  position: relative;
+}
+
+/* Contenedor centrado y responsive del nav */
+.nav-container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  min-height: 3rem;
+}
+
+/* Botón hamburguesa (abre/cierra el menú en móvil) */
+.nav-toggle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 24px;
+  background-color: var(--wood-accent);
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid var(--text-light);
+  cursor: pointer;
+  z-index: 1000;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-toggle span {
+  width: 100%;
+  height: 3px;
+  background: var(--text-light);
+  border-radius: 2px;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease,
+    background 0.3s ease;
+}
+
+.nav-toggle:hover {
+  background-color: var(--slate);
+}
+
+.nav-toggle:hover span {
+  background: var(--charcoal);
+}
+
+/* Estado "open": convierte el ícono hamburguesa en una "X" */
+.nav-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.nav-toggle.open:hover {
+  background-color: var(--slate);
+}
+
+.nav-toggle.open:hover span {
+  background: var(--charcoal);
+}
+
+/* Menú desplegable (cerrado por defecto en móvil) */
+.nav-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  overflow: hidden;
+  background-color: var(--slate);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  z-index: 500;
+}
+
+/* Menú visible (estado abierto) */
+.nav-menu--visible {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-menu li {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.nav-menu--visible li {
+  animation: navLinkFade 0.3s forwards ease;
+}
+
+.nav-menu--visible li:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.nav-menu--visible li:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.nav-menu--visible li:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.nav-menu--visible li:nth-child(4) {
+  animation-delay: 0.25s;
+}
+
+/* Animación de aparición progresiva para ítems de navegación */
+@keyframes navLinkFade {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.nav-menu li a {
+  display: block;
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-light);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+
+.nav-menu li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--wood-accent);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-menu li a:hover::after,
+.nav-menu li a.activo::after {
+  left: 0;
+  width: 100%;
+}
+
+/* Navegación de escritorio: menú siempre visible y centrado */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-menu {
+    max-height: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    position: static;
+    overflow: visible;
+    background: none;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .nav-container {
+    justify-content: center;
+  }
+}
+
+/* Transiciones comunes para enlaces de menú y botones */
+.nav-menu li a {
+  display: inline-block;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+/* Navegación móvil y ajustes de columnas en pantallas pequeñas */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+    border: none;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-menu {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .nav-menu li {
+    width: 100%;
+    display: flex;
+    margin-bottom: 3px;
+    justify-content: center;
+  }
+
+  .nav-menu li a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .columnas,
+  .personas,
+  .servicio,
+  .contacto {
+    flex-direction: column;
+  }
+
+  .galeria {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .formulario {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Navegación de escritorio: menú siempre visible y centrado */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-menu {
+    max-height: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    position: static;
+    overflow: visible;
+    background: none;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .nav-container {
+    justify-content: center;
+  }
+}
+
+/* Transiciones comunes para enlaces de menú y botones */
+.nav-menu li a,
+.btn,
+.btn-enviar {
+  display: inline-block;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+/* Accesibilidad: respeta usuarios con animaciones reducidas */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.nav-menu li a:hover,
+.btn:hover,
+.btn-enviar:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}

@@ -1,0 +1,29 @@
+
+
+/* Tamaño del logotipo en el header */
+.img-logo {
+  max-width: 80px;
+  height: auto;
+}
+/* Encabezado fijo con logo y título */
+header {
+  background-color: var(--charcoal);
+  padding: 8px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+}
+
+header .holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header h1 {
+  color: var(--text-light);
+  font-size: 1.5rem;
+  font-weight: 100;
+  font-style: italic;
+  margin: 0 0 0 0.5rem;
+}
