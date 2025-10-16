@@ -1,54 +1,54 @@
 :root {
-    /* Variables de tema: colores, tipografías y medidas reutilizables */
-    --charcoal: #2c2c2c;
-    --slate: #4a4a4a;
-    --silver: #cfcfcf;
-    --wood-accent: #a67c52;
-    --white: #ffffff;
-    --text-dark: #1a1a1a;          /* Más oscuro para mejor contraste */
-    --text-light: #f5f5f5;
-    --esp: 1rem;
-    --max-w: 960px;
-    
-    /* Light Theme Colors */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f7fafc;
-    --text-primary: #1a1a1a;       /* Texto más oscuro */
-    --text-secondary: #2d3748;     /* Secundario más oscuro */
-    --border-color: #e2e8f0;
-    --shadow: rgba(0, 0, 0, 0.1);
+  /* Colores base */
+  --charcoal: #2c2c2c;
+  --slate: #4a4a4a;
+  --silver: #cfcfcf;
+  --wood-accent: #a67c52;
+  --white: #ffffff;
+  
+  /* Medidas */
+  --esp: 1rem;
+  --max-w: 960px;
+  
+  /* Light Theme */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7fafc;
+  --text-primary: #1a1a1a;
+  --text-secondary: #2d3748;
+  --text-dark: #1a1a1a;
+  --text-light: #f5f5f5;
+  --border-color: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.1);
 }
 
 /* Dark Theme - Paleta Industrial (Herrería) */
 .dark-theme {
-    /* Fondos oscuros con tono de hierro/acero */
-    --bg-primary: #1a1a1a;        /* Negro carbón */
-    --bg-secondary: #2a2a2a;      /* Gris acero oscuro */
-    --bg-tertiary: #3a3a3a;       /* Gris hierro */
-    
-    /* Textos claros con tono cálido - MEJORADO CONTRASTE */
-    --text-primary: #f5f5f5;      /* Blanco casi puro - más contraste */
-    --text-secondary: #d0d0d0;    /* Gris muy claro - mejor legibilidad */
-    
-    /* Bordes sutiles con tono metálico */
-    --border-color: #4a4a4a;      /* Gris metal */
-    
-    /* Sombras profundas */
-    --shadow: rgba(0, 0, 0, 0.6);
-    
-    /* Colores heredados adaptados al tema industrial */
-    --charcoal: #2a2a2a;
-    --slate: #3a3a3a;
-    --silver: #6a6a6a;
-    --text-dark: #f5f5f5;         /* Blanco casi puro */
-    --white: #1a1a1a;
-    --text-light: #f5f5f5;        /* Blanco casi puro */
-    
-    /* Acentos industriales - INTENSIFICADOS */
-    --accent-rust: #d9854f;       /* Óxido más brillante */
-    --accent-wood: #9d7d52;       /* Madera más clara */
-    --accent-steel: #8a9ba8;      /* Acero más claro */
-    --accent-fire: #e88547;       /* Fuego más intenso */
+  /* Fondos oscuros con tono de hierro/acero */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2a2a2a;
+  --bg-tertiary: #3a3a3a;
+  
+  /* Textos claros con tono cálido */
+  --text-primary: #f5f5f5;
+  --text-secondary: #d0d0d0;
+  --text-dark: #f5f5f5;
+  --text-light: #f5f5f5;
+  
+  /* Bordes y sombras */
+  --border-color: #4a4a4a;
+  --shadow: rgba(0, 0, 0, 0.6);
+  
+  /* Colores base adaptados */
+  --charcoal: #2a2a2a;
+  --slate: #3a3a3a;
+  --silver: #6a6a6a;
+  --white: #1a1a1a;
+  
+  /* Acentos industriales */
+  --accent-rust: #d9854f;
+  --accent-wood: #9d7d52;
+  --accent-steel: #8a9ba8;
+  --accent-fire: #e88547;
 }
 
 .dark-theme body {
@@ -69,8 +69,9 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
+
 /* Tipografía y fondo global del sitio */
 body {
   margin: 0;
@@ -83,16 +84,32 @@ body {
 
 /* Contenedor ancho máximo reutilizable */
 .holder {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 0 var(--esp);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--esp);
 }
-/* Accesibilidad: respeta usuarios con animaciones reducidas */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation: none !important;
-  }
+
+/* Mejora de UX en móviles: quitar destello/tap highlight y outlines en enlaces/botones del menú */
+button,
+a,
+.nav-menu li a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+a:focus,
+.slider-btn:focus,
+.nav-menu li a:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Transiciones comunes para enlaces de menú y botones */
+.nav-menu li a,
+.btn,
+.btn-enviar {
+  display: inline-block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .nav-menu li a:hover,
@@ -101,25 +118,11 @@ body {
   transform: scale(1.05);
   opacity: 0.9;
 }
-/* Mejora de UX en móviles: quitar destello/tap highlight y outlines en enlaces/botones del menú */
-button,
-a,
-.nav-menu li a {
-  -webkit-tap-highlight-color: transparent;
-}
-button:focus,
-a:focus,
-.slider-btn:focus,
-.nav-menu li a:focus {
-  outline: none;
-  box-shadow: none;
-}
-/* Transiciones comunes para enlaces de menú y botones */
-.nav-menu li a,
-.btn,
-.btn-enviar {
-  display: inline-block;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+
+/* Accesibilidad: respeta usuarios con animaciones reducidas */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
 }
