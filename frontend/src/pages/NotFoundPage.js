@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../styles/components/pages/NotFoundPage.css';
 import SEO from '../components/SEO';
 
@@ -42,7 +42,7 @@ const NotFoundPage = () => {
             <ul className="suggestions-list">
               <li><Link to="/nosotros">👥 Nosotros</Link></li>
               <li><Link to="/galeria">🖼️ Galería</Link></li>
-              <li><Link to="/contacto">📞 Contacto</Link></li>
+              <li><Link to="/contacto">�� Contacto</Link></li>
             </ul>
           </div>
         </div>
