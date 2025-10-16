@@ -24,37 +24,63 @@ a:focus,
   outline: none;
 }
 
-/* Barra de navegación principal (contenedor) */
+/* Barra de navegación integrada en el header */
 nav {
-  background-color: var(--slate);
-  margin-bottom: var(--esp);
+  background-color: transparent;
+  margin-bottom: 0;
   position: relative;
+  z-index: 1000;
+  transition: none;
+  box-shadow: none;
+  margin-top: 0;
+  border: none;
+}
+
+/* Eliminamos el comportamiento nav-sticky-top */
+nav.nav-sticky-top {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+/* Tema oscuro para nav - sin bordes ni fondos */
+.dark-theme nav {
+  background-color: transparent;
+  border: none;
+}
+
+.dark-theme nav.nav-sticky-top {
+  box-shadow: none;
+  background-color: transparent;
 }
 
 /* Contenedor centrado y responsive del nav */
 .nav-container {
-  max-width: var(--max-w);
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  min-height: 3rem;
+  justify-content: flex-end;
+  gap: 1rem;
+  min-height: auto;
+  padding: 0;
+  position: relative;
 }
 
-/* Botón hamburguesa (abre/cierra el menú en móvil) */
+/* Botón hamburguesa (abre/cierra el menú en móvil) - Lado derecho */
 .nav-toggle {
   position: absolute;
+  right: 1rem;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 32px;
+  height: 32px;
   background-color: var(--wood-accent);
-  padding: 4px;
+  padding: 6px;
   border-radius: 4px;
   border: 1px solid var(--text-light);
   cursor: pointer;
@@ -63,10 +89,11 @@ nav {
 }
 
 .nav-toggle span {
-  width: 100%;
-  height: 3px;
+  width: 20px;
+  height: 2px;
   background: var(--text-light);
   border-radius: 2px;
+  display: block;
   transition:
     transform 0.3s ease,
     opacity 0.3s ease,
@@ -106,7 +133,7 @@ nav {
 .nav-menu {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0rem;
   max-height: 0;
   opacity: 0;
   transform: translateY(-10px);
@@ -165,30 +192,87 @@ nav {
 
 .nav-menu li a {
   display: block;
-  padding: 1rem;
+  padding: 0.5rem 1.2rem;
   text-align: center;
   color: var(--text-light);
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: background 0.3s;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  background: none;
 }
 
+.nav-menu li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Tema oscuro para enlaces del menú */
+.dark-theme .nav-menu li a {
+  color: var(--text-primary);
+  background: none;
+}
+
+.dark-theme .nav-menu {
+  background-color: var(--bg-secondary);
+}
+
+.dark-theme .nav-toggle {
+  background-color: var(--accent-rust);
+  border-color: var(--accent-wood);
+}
+
+.dark-theme .nav-toggle span {
+  background: var(--text-primary);
+}
+
+.dark-theme .nav-toggle:hover {
+  background-color: var(--accent-fire);
+}
+
+
+/* Estilo activo más visible - solo con línea */
+.nav-menu li a.active,
+.nav-menu li a.activo {
+  color: var(--wood-accent);
+  font-weight: 500;
+}
+
+.dark-theme .nav-menu li a.active,
+.dark-theme .nav-menu li a.activo {
+  color: var(--accent-rust);
+}
+
+/* Línea decorativa bajo los enlaces */
 .nav-menu li a::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   left: 50%;
   width: 0;
-  height: 2px;
+  height: 3px;
   background: var(--wood-accent);
   transition: width 0.3s ease, left 0.3s ease;
 }
 
-.nav-menu li a:hover::after,
+.nav-menu li a:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+/* Línea visible en página activa */
+.nav-menu li a.active::after,
 .nav-menu li a.activo::after {
   left: 0;
   width: 100%;
+}
+
+/* Color de línea en tema oscuro */
+.dark-theme .nav-menu li a::after {
+  background: var(--accent-rust);
 }
 
 /* Navegación de escritorio: menú siempre visible y centrado */
@@ -203,15 +287,31 @@ nav {
     transform: none !important;
     position: static;
     overflow: visible;
-    background: none;
+    background: none !important;
     display: flex !important;
     flex-direction: row;
-    justify-content: center;
-    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0;
+  }
+
+  .nav-menu li {
+    opacity: 1;
+    transform: none;
+    padding: 0 0.25rem;
+  }
+
+  .nav-menu li a {
+    padding: 0.4rem 0.6rem;
   }
 
   .nav-container {
-    justify-content: center;
+    justify-content: flex-end;
+  }
+
+  /* Forzar que el nav-menu no tenga fondo en desktop */
+  .dark-theme .nav-menu {
+    background: none !important;
   }
 }
 
@@ -224,53 +324,118 @@ nav {
 }
 /* Navegación móvil y ajustes de columnas en pantallas pequeñas */
 @media (max-width: 768px) {
-  .nav-toggle {
-    display: flex;
-    border: none;
+  nav {
+    margin-bottom: 0;
   }
 
   .nav-container {
-    flex-direction: column;
-    align-items: center;
+    padding: 0.5rem 1rem;
+    min-height: 2.5rem;
     justify-content: center;
+    width: 100%;
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: flex;
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 0 auto;
+    z-index: 1002;
   }
 
   .nav-menu {
-    display: flex !important;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     left: 0;
     right: 0;
     width: 100%;
+    padding: 1rem 0;
+    background-color: rgba(44, 44, 44, 0.98);
+    position: fixed;
+    top: 82px;
+    z-index: 999;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      0 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 12px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .dark-theme .nav-menu {
+    background-color: rgba(30, 30, 30, 0.98);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.7),
+      0 2px 8px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
   .nav-menu li {
     width: 100%;
     display: flex;
-    margin-bottom: 3px;
+    margin-bottom: 0;
     justify-content: center;
+    opacity: 1;
+    transform: none;
   }
 
   .nav-menu li a {
     width: 100%;
     text-align: center;
+    padding: 1rem;
+    border-radius: 0;
   }
 
-  .columnas,
-  .personas,
-  .servicio,
-  .contacto {
-    flex-direction: column;
+  /* Estilos para link activo en móvil */
+  .nav-menu li a.activo,
+  .nav-menu li a.active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: var(--wood-accent) !important;
+    font-weight: 600;
   }
 
-  .galeria {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
+  .dark-theme .nav-menu li a.activo,
+  .dark-theme .nav-menu li a.active {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--accent-rust) !important;
   }
 
-  .formulario {
-    grid-template-columns: 1fr;
+  .nav-menu li a::after {
+    display: none;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0.8rem;
+    min-height: 2rem;
+  }
+
+  .nav-toggle {
+    width: 34px;
+    height: 30px;
+    padding: 6px;
+  }
+
+  .nav-toggle span {
+    height: 2.5px;
+  }
+
+  .nav-menu {
+    top: 76px;
+  }
+
+  .nav-menu li a {
+    padding: 0.7rem;
+    font-size: 0.95rem;
   }
 }
 

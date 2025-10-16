@@ -5,6 +5,17 @@ h2 {
   margin-top: var(--esp);
 }
 
+/* Mejora de contraste en tema oscuro */
+.dark-theme h2 {
+  color: var(--text-primary);
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme p {
+  color: var(--text-secondary);
+}
+
 /* Sección de beneficios (tarjetas con iconos y texto) */
 .beneficios {
   display: flex;
@@ -26,6 +37,16 @@ h2 {
   box-shadow: 0 3px 12px #2c2c2c08;
   text-align: center;
   transition: box-shadow .18s, transform .18s;
+}
+
+/* Tema oscuro para beneficios */
+.dark-theme .beneficios {
+  background: var(--bg-tertiary);
+}
+
+.dark-theme .beneficio {
+  background: var(--bg-secondary);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
 }
 
 .beneficio .icon-material,
@@ -68,13 +89,22 @@ h2 {
   font-size: 0.98em;
 }
 
+/* Tema oscuro para texto de beneficios */
+.dark-theme .beneficio h3 {
+  color: var(--text-primary);
+}
+
+.dark-theme .beneficio p {
+  color: var(--text-secondary);
+}
+
 @media(max-width:900px) {
   .beneficios {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin: 1.2rem 0;
-    padding: 1.2rem 0 0.8rem 0;
+    padding: 0.7rem;
     background: #fafafc;
     border-radius: 12px;
     width: 100%;
@@ -84,7 +114,7 @@ h2 {
     min-width: 0;
     box-sizing: border-box;
     text-align: center;
-    padding: 0.7rem 0.2rem;
+    padding: 0.7rem;
     max-width: 100%;
   }
 }

@@ -1,6 +1,7 @@
 import "../App.css";
 import "../styles/components/pages/ContactoPage.css";
 import { useEffect } from "react";
+import SEO from '../components/SEO';
 
 const ContactoPage = () => {
   useEffect(() => {
@@ -86,7 +87,13 @@ const ContactoPage = () => {
   }, []);
 
   return (
-    <main className="holder contacto">
+    <>
+      <SEO 
+        title="Contacto"
+        description="Contactá con MC Estilo Industrial. Respondemos tus consultas en menos de 24 horas. Pedí tu presupuesto sin compromiso."
+        keywords="contacto, presupuesto, consultas, formulario contacto, whatsapp, ubicación"
+      />
+      <main className="holder contacto">
       <div className="form-container fade-in">
         <h2>¡Hablemos!</h2>
         <p className="mensaje-bienvenida">
@@ -192,6 +199,7 @@ const ContactoPage = () => {
         ></iframe>
       </div>
     </main>
+    </>
   );
 };
 

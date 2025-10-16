@@ -1,9 +1,9 @@
 import '../../styles/components/layout/Nav.css'
 import { NavLink } from "react-router-dom";
 import { useEffect } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 const Nav = (props) => {
-    // 1. Toggle de menú
     useEffect(() => {
         const btn = document.querySelector('.nav-toggle');
         const menu = document.querySelector('.nav-menu');
@@ -73,13 +73,15 @@ const Nav = (props) => {
 
     return (
         <nav>
-            <div className="holder nav-container">
+            <div className="nav-container">
                 <ul className="nav-menu">
                     <li><NavLink to="/" className={({ isActive }) => isActive ? "activo" : undefined}>Home</NavLink></li>
                     <li><NavLink to="/nosotros" className={({ isActive }) => isActive ? "activo" : undefined}>Nosotros</NavLink></li>
                     <li><NavLink to="/galeria" className={({ isActive }) => isActive ? "activo" : undefined}>Galería</NavLink></li>
+                    <li><NavLink to="/novedades" className={({ isActive }) => isActive ? "activo" : undefined}>Novedades</NavLink></li>
                     <li><NavLink to="/contacto" className={({ isActive }) => isActive ? "activo" : undefined}>Contacto</NavLink></li>
                 </ul>
+                <ThemeToggle />
                 <button className="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>

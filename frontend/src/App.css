@@ -5,10 +5,64 @@
     --silver: #cfcfcf;
     --wood-accent: #a67c52;
     --white: #ffffff;
-    --text-dark: #333333;
+    --text-dark: #1a1a1a;          /* Más oscuro para mejor contraste */
     --text-light: #f5f5f5;
     --esp: 1rem;
     --max-w: 960px;
+    
+    /* Light Theme Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f7fafc;
+    --text-primary: #1a1a1a;       /* Texto más oscuro */
+    --text-secondary: #2d3748;     /* Secundario más oscuro */
+    --border-color: #e2e8f0;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Theme - Paleta Industrial (Herrería) */
+.dark-theme {
+    /* Fondos oscuros con tono de hierro/acero */
+    --bg-primary: #1a1a1a;        /* Negro carbón */
+    --bg-secondary: #2a2a2a;      /* Gris acero oscuro */
+    --bg-tertiary: #3a3a3a;       /* Gris hierro */
+    
+    /* Textos claros con tono cálido - MEJORADO CONTRASTE */
+    --text-primary: #f5f5f5;      /* Blanco casi puro - más contraste */
+    --text-secondary: #d0d0d0;    /* Gris muy claro - mejor legibilidad */
+    
+    /* Bordes sutiles con tono metálico */
+    --border-color: #4a4a4a;      /* Gris metal */
+    
+    /* Sombras profundas */
+    --shadow: rgba(0, 0, 0, 0.6);
+    
+    /* Colores heredados adaptados al tema industrial */
+    --charcoal: #2a2a2a;
+    --slate: #3a3a3a;
+    --silver: #6a6a6a;
+    --text-dark: #f5f5f5;         /* Blanco casi puro */
+    --white: #1a1a1a;
+    --text-light: #f5f5f5;        /* Blanco casi puro */
+    
+    /* Acentos industriales - INTENSIFICADOS */
+    --accent-rust: #d9854f;       /* Óxido más brillante */
+    --accent-wood: #9d7d52;       /* Madera más clara */
+    --accent-steel: #8a9ba8;      /* Acero más claro */
+    --accent-fire: #e88547;       /* Fuego más intenso */
+}
+
+.dark-theme body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Mejoras visuales para elementos específicos en tema oscuro */
+.dark-theme a {
+    color: var(--accent-rust);
+}
+
+.dark-theme a:hover {
+    color: var(--accent-fire);
 }
 
 /* Reset de box-sizing para un layout predecible */

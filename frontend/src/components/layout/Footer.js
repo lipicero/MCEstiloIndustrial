@@ -8,11 +8,29 @@ const Footer = (props) => {
 
     if (!btnTop) return;
 
+    let ticking = false;
+    let isVisible = false;
+
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      const scrollY = window.scrollY;
+      
+      // Hysteresis: diferentes umbrales para aparecer y desaparecer
+      // Umbrales más altos para evitar el área problemática
+      if (!isVisible && scrollY > 300) {
         btnTop.classList.add('show');
-      } else {
+        isVisible = true;
+      } else if (isVisible && scrollY < 200) {
         btnTop.classList.remove('show');
+        isVisible = false;
+      }
+      
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
       }
     };
 
@@ -20,12 +38,12 @@ const Footer = (props) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     btnTop.addEventListener('click', scrollToTop);
 
     // Limpieza al desmontar
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', onScroll);
       btnTop.removeEventListener('click', scrollToTop);
     };
   }, []);

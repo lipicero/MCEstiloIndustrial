@@ -1,8 +1,28 @@
 import '../styles/components/pages/GaleriaPage.css';
-import '../App.css'
-import { useEffect } from 'react';
+import '../App.css';
+import { useEffect, useState } from 'react';
+import SEO from '../components/SEO';
 
 const GaleriaPage = (props) => {
+  const [filtroActivo, setFiltroActivo] = useState('todos');
+
+  // Datos de las imágenes con categorías y descripciones
+  const imagenes = [
+    { src: "img/galeria/img1.webp", categoria: "muebles", descripcion: "Mesa de comedor industrial" },
+    { src: "img/galeria/img2.webp", categoria: "muebles", descripcion: "Biblioteca de hierro y madera" },
+    { src: "img/galeria/img3.webp", categoria: "portones", descripcion: "Portón corredizo moderno" },
+    { src: "img/galeria/img4.webp", categoria: "muebles", descripcion: "Rack para TV estilo industrial" },
+    { src: "img/galeria/img5.webp", categoria: "rejas", descripcion: "Reja de seguridad diseño minimalista" },
+    { src: "img/galeria/img6.jpg", categoria: "estructuras", descripcion: "Estructura metálica para terraza" },
+    { src: "img/galeria/img7.webp", categoria: "muebles", descripcion: "Mesa ratona de hierro y madera" },
+    { src: "img/galeria/img8.webp", categoria: "portones", descripcion: "Portón de entrada principal" },
+    { src: "img/galeria/img9.webp", categoria: "muebles", descripcion: "Escritorio con cajonera integrada" },
+    { src: "img/galeria/img10.webp", categoria: "estructuras", descripcion: "Barandas de escalera personalizadas" },
+  ];
+
+  const imagenesFiltradas = filtroActivo === 'todos' 
+    ? imagenes 
+    : imagenes.filter(img => img.categoria === filtroActivo);
 
   useEffect(() => {
 
@@ -81,21 +101,77 @@ const GaleriaPage = (props) => {
       });
     });
   }, []);
+  
   return (
-    <main className="holder">
-      <div className="galeria fade-in">
-        <img src="img/galeria/img1.webp" loading="lazy" alt="" />
-        <img src="img/galeria/img2.webp" loading="lazy" alt="" />
-        <img src="img/galeria/img3.webp" loading="lazy" alt="" />
-        <img src="img/galeria/img4.webp" loading="lazy" alt="" />
-        <img src="img/galeria/img5.webp" loading="lazy" alt="" />
-        <img src="img/galeria/img6.jpg" loading="lazy" alt="" />
-        <img src="img/galeria/img7.webp" loading="lazy" alt="" />
-        <img src="img/galeria/img8.webp" loading="lazy" alt="" />
-        <img src="img/galeria/img9.webp" loading="lazy" alt="" />
-        <img src="img/galeria/img10.webp" loading="lazy" alt="" />
-      </div>
-    </main>
+    <>
+      <SEO 
+        title="Galería"
+        description="Explorá nuestra galería de proyectos y diseños en muebles industriales. Inspiración para tu hogar o negocio con estilo único."
+        keywords="galería, proyectos, diseños industriales, portfolio, muebles personalizados, fotos"
+      />
+      <main className="holder galeria-page">
+        <section className="galeria-header fade-in">
+          <h1>Nuestra Galería</h1>
+          <p>Proyectos realizados con pasión y dedicación</p>
+        </section>
+
+        {/* Filtros */}
+        <section className="filtros-galeria fade-in">
+          <button 
+            className={`filtro-btn ${filtroActivo === 'todos' ? 'active' : ''}`}
+            onClick={() => setFiltroActivo('todos')}
+          >
+            <span className="filtro-icon">📦</span>
+            Todos
+          </button>
+          <button 
+            className={`filtro-btn ${filtroActivo === 'muebles' ? 'active' : ''}`}
+            onClick={() => setFiltroActivo('muebles')}
+          >
+            <span className="filtro-icon">🪑</span>
+            Muebles
+          </button>
+          <button 
+            className={`filtro-btn ${filtroActivo === 'portones' ? 'active' : ''}`}
+            onClick={() => setFiltroActivo('portones')}
+          >
+            <span className="filtro-icon">🚪</span>
+            Portones
+          </button>
+          <button 
+            className={`filtro-btn ${filtroActivo === 'rejas' ? 'active' : ''}`}
+            onClick={() => setFiltroActivo('rejas')}
+          >
+            <span className="filtro-icon">🛡️</span>
+            Rejas
+          </button>
+          <button 
+            className={`filtro-btn ${filtroActivo === 'estructuras' ? 'active' : ''}`}
+            onClick={() => setFiltroActivo('estructuras')}
+          >
+            <span className="filtro-icon">🏗️</span>
+            Estructuras
+          </button>
+        </section>
+
+        {/* Galería con descripciones */}
+        <div className="galeria fade-in">
+          {imagenesFiltradas.map((img, index) => (
+            <div key={index} className="galeria-item">
+              <img 
+                src={img.src} 
+                loading="lazy" 
+                alt={img.descripcion}
+                data-categoria={img.categoria}
+              />
+              <div className="galeria-descripcion">
+                <p>{img.descripcion}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    </>
   )
 }
 

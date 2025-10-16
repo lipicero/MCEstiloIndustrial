@@ -26,6 +26,21 @@
   box-shadow: 0 12px 48px #2c2c2c22, 0 2.5px 12px #a67c5245;
 }
 
+/* Tema oscuro para formulario */
+.dark-theme .form-container {
+  background: var(--bg-secondary);
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(217, 133, 79, 0.3);
+}
+
+.dark-theme .form-container:hover {
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), 0 2.5px 12px rgba(217, 133, 79, 0.4);
+}
+
+.dark-theme .form-container h2 {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 /* Mensaje introductorio del formulario */
 .mensaje-bienvenida {
   color: var(--slate);
@@ -35,6 +50,12 @@
   padding: 0.9em 1.1em;
   font-size: 1.07em;
   margin-bottom: 1.3em;
+}
+
+.dark-theme .mensaje-bienvenida {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-left-color: var(--accent-rust);
 }
 
 .formulario label .icon {
@@ -70,6 +91,25 @@
   border-color: var(--wood-accent);
   box-shadow: 0 0 0 2px #a67c5233;
   outline: none;
+}
+
+/* Tema oscuro para inputs */
+.dark-theme .formulario input,
+.dark-theme .formulario textarea {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.dark-theme .formulario input:focus,
+.dark-theme .formulario textarea:focus {
+  border-color: var(--accent-rust);
+  box-shadow: 0 0 0 2px rgba(217, 133, 79, 0.3);
+}
+
+.dark-theme .formulario label {
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 /* Botón enviar del formulario y estilos de hover/focus */
@@ -218,4 +258,23 @@
   .formulario {
     grid-template-columns: 1fr;
   }
+}
+
+/* Estilos adicionales para tema oscuro */
+.dark-theme .datos {
+  background: var(--bg-secondary);
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.4);
+}
+
+.dark-theme .datos h2 {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.dark-theme .icon-list a {
+  color: var(--text-primary);
+}
+
+.dark-theme .icon-list a:hover {
+  color: var(--accent-rust);
 }

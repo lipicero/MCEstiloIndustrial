@@ -1,9 +1,40 @@
 import { useEffect } from "react";
 import "../../styles/components/layout/Header.css";
+import Nav from "./Nav";
 
 const Header = () => {
   useEffect(() => {
-    // 2. Fade-in al hacer scroll
+    // Efecto de sombra en el nav al hacer scroll
+    let ticking = false;
+    const nav = document.querySelector('nav');
+    
+    const handleScroll = () => {
+      const currentScroll = window.pageYOffset;
+      
+      // Agregar sombra al nav cuando se hace scroll
+      if (currentScroll > 50) {
+        if (nav) {
+          nav.classList.add('nav-sticky-top');
+        }
+      } else {
+        if (nav) {
+          nav.classList.remove('nav-sticky-top');
+        }
+      }
+      
+      ticking = false;
+    };
+    
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', onScroll, { passive: true });
+    
+    // Fade-in al hacer scroll
     var elementos = document.querySelectorAll(".fade-in");
     var observer = new IntersectionObserver(
       function (entries, obs) {
@@ -27,16 +58,24 @@ const Header = () => {
       // Observa cada elemento fade-in
       observer.observe(el);
     });
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
   return (
     <header>
-      <div className="holder fade-in">
-        <img
-          src="/img/logo.png"
-          className="img-logo"
-          alt="logo mcestiloindustrial"
-        />
-        <h1>MC Estilo Industrial</h1>
+      <div className="header-container">
+        <div className="logo-section">
+          <img
+            src="/img/logo.png"
+            className="img-logo"
+            alt="logo mcestiloindustrial"
+          />
+          <h1>MC Estilo Industrial</h1>
+        </div>
+        <Nav />
       </div>
     </header>
   );

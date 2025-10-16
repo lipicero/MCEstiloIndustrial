@@ -1,0 +1,297 @@
+/* 404 Page Styles - Tema Industrial */
+.notfound-container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #8b6f47 0%, #6b5537 100%); /* Madera oscura */
+  margin: 0;
+  width: 100%;
+}
+
+/* Tema oscuro */
+.dark-theme .notfound-container {
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); /* Hierro oscuro */
+}
+
+.notfound-content {
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Tema oscuro para el contenido */
+.dark-theme .notfound-content {
+  background: rgba(42, 42, 42, 0.95);
+  border: 1px solid var(--accent-rust);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(201, 122, 74, 0.3);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Error Code */
+.error-code {
+  font-size: 10rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--wood-accent);
+  text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme .error-code {
+  color: var(--accent-rust);
+  text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4), 0 0 20px rgba(201, 122, 74, 0.3);
+}
+
+.glitch-number {
+  display: inline-block;
+  animation: glitch 1s infinite;
+}
+
+.zero-animated {
+  display: inline-block;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-3px, 3px); }
+  40% { transform: translate(-3px, -3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(3px, -3px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Title & Message */
+.notfound-title {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.notfound-message {
+  font-size: 1.2rem;
+  color: #4a5568;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* Action Buttons */
+.notfound-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.btn-home,
+.btn-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-home {
+  background: linear-gradient(135deg, #c97a4a 0%, #8b6f47 100%); /* Óxido a madera */
+  color: white;
+}
+
+.btn-home:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(201, 122, 74, 0.4);
+  background: linear-gradient(135deg, #d4773d 0%, #c97a4a 100%);
+}
+
+.btn-contact {
+  background: white;
+  color: var(--wood-accent);
+  border: 2px solid var(--wood-accent);
+}
+
+.btn-contact:hover {
+  background: var(--wood-accent);
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* Tema oscuro para botones */
+.dark-theme .btn-home {
+  background: linear-gradient(135deg, #c97a4a 0%, #d4773d 100%);
+}
+
+.dark-theme .btn-contact {
+  background: var(--bg-secondary);
+  color: var(--accent-rust);
+  border-color: var(--accent-rust);
+}
+
+.dark-theme .btn-contact:hover {
+  background: var(--accent-rust);
+  color: white;
+}
+
+/* Suggestions */
+.suggestions {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px dashed #cbd5e0;
+}
+
+.suggestions-title {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.suggestions-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.suggestions-list li a {
+  color: var(--wood-accent);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.suggestions-list li a:hover {
+  background: var(--wood-accent);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Tema oscuro para sugerencias */
+.dark-theme .suggestions {
+  border-top-color: var(--border-color);
+}
+
+.dark-theme .suggestions-list li a {
+  color: var(--accent-rust);
+}
+
+.dark-theme .suggestions-list li a:hover {
+  background: var(--accent-rust);
+  color: white;
+}
+
+/* Illustration */
+.notfound-illustration {
+  margin-top: 2rem;
+  opacity: 0.3;
+}
+
+.broken-link {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border: 4px dashed #cbd5e0;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 3s linear infinite;
+}
+
+.broken-link::before {
+  content: '🔗';
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .error-code {
+    font-size: 6rem;
+  }
+
+  .notfound-title {
+    font-size: 1.8rem;
+  }
+
+  .notfound-message {
+    font-size: 1rem;
+  }
+
+  .notfound-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-home,
+  .btn-contact {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .suggestions-list {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Dark Theme Support */
+.dark-theme .notfound-content {
+  background: rgba(30, 30, 30, 0.95);
+}
+
+.dark-theme .notfound-title {
+  color: #e2e8f0;
+}
+
+.dark-theme .notfound-message {
+  color: #cbd5e0;
+}
+
+.dark-theme .suggestions-title {
+  color: #cbd5e0;
+}
+
+.dark-theme .suggestions {
+  border-top-color: #4a5568;
+}

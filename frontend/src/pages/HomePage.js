@@ -1,6 +1,8 @@
 import '../styles/components/pages/HomePage.css';
-import '../App.css'
+import '../App.css';
 import { useEffect } from 'react';
+import SEO from '../components/SEO';
+
 const HomePage = (props) => {
 
   useEffect(() => {
@@ -51,12 +53,20 @@ dots.innerHTML = '';
       dotButtons.forEach((d, i) => {
         d.classList.toggle('active', i === index);
       });
-      prev.disabled = index === 0;
-      next.disabled = index === imgs.length - 1;
+      // Carrusel infinito: los botones nunca se deshabilitan
+      prev.disabled = false;
+      next.disabled = false;
     };
 
     const irA = (i) => {
-      index = Math.max(0, Math.min(i, imgs.length - 1));
+      // Carrusel infinito: si llega al final, vuelve al inicio y viceversa
+      if (i < 0) {
+        index = imgs.length - 1;
+      } else if (i >= imgs.length) {
+        index = 0;
+      } else {
+        index = i;
+      }
       actualizarSlider();
     };
 
@@ -96,7 +106,13 @@ dots.innerHTML = '';
 
   }, []);
   return (
-    <main className="holder">
+    <>
+      <SEO 
+        title="Inicio"
+        description="MC Estilo Industrial - Muebles y decoración con estilo industrial único. Diseños personalizados en hierro y madera para espacios contemporáneos."
+        keywords="muebles industriales, diseño industrial, muebles de hierro, decoración industrial, muebles personalizados, MC estilo industrial"
+      />
+      <main className="holder">
 
       <div className="columnas">
         <section className="bienvenidos fade-in">
@@ -158,6 +174,7 @@ dots.innerHTML = '';
         <div className="slider-dots" id="slider-dots"></div>
       </section>
     </main>
+    </>
   );
 }
 
