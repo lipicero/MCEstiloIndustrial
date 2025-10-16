@@ -76,8 +76,12 @@ const GaleriaPage = (props) => {
     var cerrarBtn = modal.querySelector('.modal-close');    // Botón de cerrar modal
 
     gal.addEventListener('click', function (e) {             // Al hacer clic en la galería
-      if (e.target.tagName !== 'IMG') return;               // Solo imágenes abren modal
-      imgModal.src = e.target.src;                          // Copia la URL de la imagen
+      // Buscar si el click fue en una imagen o en el contenedor de la imagen
+      const clickedImg = e.target.tagName === 'IMG' ? e.target : e.target.closest('.galeria-item')?.querySelector('img');
+      
+      if (!clickedImg) return;                              // Si no hay imagen, no hacer nada
+      
+      imgModal.src = clickedImg.src;                        // Copia la URL de la imagen
       modal.style.display = 'flex';                         // Muestra el modal
       setTimeout(() => modal.classList.add('open'), 10); // Añade clase de animación
     });

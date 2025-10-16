@@ -1,8 +1,21 @@
 import { useEffect } from "react";
 import "../../styles/components/layout/Header.css";
 import Nav from "./Nav";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const Header = () => {
+  const { theme } = useTheme();
+
+  // Actualizar el theme-color del navegador según el tema
+  useEffect(() => {
+    const metaThemeColor = document.querySelector("meta[name='theme-color']");
+    const headerColor = theme === 'dark' ? '#2a2a2a' : '#2c2c2c';
+    
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', headerColor);
+    }
+  }, [theme]);
+
   useEffect(() => {
     // Efecto de sombra en el nav al hacer scroll
     let ticking = false;

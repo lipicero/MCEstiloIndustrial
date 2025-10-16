@@ -12,11 +12,21 @@ const Nav = (props) => {
 
         btn.setAttribute('aria-expanded', 'false');
 
+        // Crear el backdrop/overlay
+        let backdrop = document.querySelector('.nav-backdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.className = 'nav-backdrop';
+            document.body.appendChild(backdrop);
+        }
+
         const actualizarMenuDesktop = () => {
             if (window.innerWidth >= 769) {
                 menu.classList.add('nav-menu--visible');
+                backdrop.classList.remove('nav-backdrop--visible');
             } else {
                 menu.classList.remove('nav-menu--visible');
+                backdrop.classList.remove('nav-backdrop--visible');
             }
         };
 
@@ -29,19 +39,33 @@ const Nav = (props) => {
             btn.setAttribute('aria-expanded', String(!abierto));
             menu.classList.toggle('nav-menu--visible');
             btn.classList.toggle('open');
+            backdrop.classList.toggle('nav-backdrop--visible');
+            document.body.classList.toggle('nav-menu-open');
             btn.blur();
         };
-        const cerrarMenu = () => {
+        const cerrarMenu = (e) => {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
             btn.setAttribute('aria-expanded', 'false');
             menu.classList.remove('nav-menu--visible');
             btn.classList.remove('open');
+            backdrop.classList.remove('nav-backdrop--visible');
+            document.body.classList.remove('nav-menu-open');
         };
         const cerrarSiFuera = (e) => {
             if (!btn.classList.contains('open')) return;
             if (btn.contains(e.target) || menu.contains(e.target)) return;
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
             btn.setAttribute('aria-expanded', 'false');
             menu.classList.remove('nav-menu--visible');
             btn.classList.remove('open');
+            backdrop.classList.remove('nav-backdrop--visible');
+            document.body.classList.remove('nav-menu-open');
         };
 
         const enlaces = menu.querySelectorAll('a');
@@ -55,16 +79,20 @@ const Nav = (props) => {
         });
         btn.addEventListener('click', toggleMenu);
         btn.addEventListener('touchend', toggleMenu);
-        document.addEventListener('click', cerrarSiFuera);
-        document.addEventListener('touchend', cerrarSiFuera);
+        backdrop.addEventListener('click', cerrarMenu, true);
+        backdrop.addEventListener('touchend', cerrarMenu, true);
+        document.addEventListener('click', cerrarSiFuera, true);
+        document.addEventListener('touchend', cerrarSiFuera, true);
 
         // Limpieza al desmontar
         return () => {
             window.removeEventListener('resize', actualizarMenuDesktop);
             btn.removeEventListener('click', toggleMenu);
             btn.removeEventListener('touchend', toggleMenu);
-            document.removeEventListener('click', cerrarSiFuera);
-            document.removeEventListener('touchend', cerrarSiFuera);
+            backdrop.removeEventListener('click', cerrarMenu, true);
+            backdrop.removeEventListener('touchend', cerrarMenu, true);
+            document.removeEventListener('click', cerrarSiFuera, true);
+            document.removeEventListener('touchend', cerrarSiFuera, true);
             enlaces.forEach(enlace => {
                 enlace.removeEventListener('click', cerrarMenu);
             });

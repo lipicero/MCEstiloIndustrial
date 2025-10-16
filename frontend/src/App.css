@@ -73,6 +73,12 @@
 }
 
 /* Tipografía y fondo global del sitio */
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 body {
   margin: 0;
   font: 400 1rem/1.5 'Open Sans', sans-serif;
@@ -82,11 +88,29 @@ body {
   transition: opacity 0.25s ease;
 }
 
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Contenedor ancho máximo reutilizable */
 .holder {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--esp);
+}
+
+/* Contenedor principal de la aplicación */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Wrapper para el contenido principal */
+.main-content {
+  flex: 1 0 auto;
 }
 
 /* Mejora de UX en móviles: quitar destello/tap highlight y outlines en enlaces/botones del menú */

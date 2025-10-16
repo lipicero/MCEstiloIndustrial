@@ -1,3 +1,52 @@
+/* Backdrop/Overlay menú abierto */
+.nav-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  pointer-events: none;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  transition: opacity 0.5s ease;
+  background: transparent;
+  z-index: 500;
+  display: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+.nav-backdrop--visible {
+  display: block;
+  pointer-events: auto;
+}
+
+/* Desactivar todos los hovers y pointer-events cuando el menú está abierto */
+body.nav-menu-open * {
+  pointer-events: none !important;
+}
+
+body.nav-menu-open .nav-toggle,
+body.nav-menu-open .nav-toggle *,
+body.nav-menu-open .nav-menu,
+body.nav-menu-open .nav-menu *,
+body.nav-menu-open .nav-backdrop {
+  pointer-events: auto !important;
+}
+
+/* Ocultar backdrop en desktop */
+@media (min-width: 769px) {
+  .nav-backdrop {
+    display: none !important;
+  }
+}
+
 /* Mejora de UX en móviles: quitar destello/tap highlight y outlines en enlaces/botones del menú */
 a,
 .nav-menu li a {
@@ -424,8 +473,8 @@ nav.nav-sticky-top {
   }
 
   .nav-menu li a {
-    padding: 0.7rem;
-    font-size: 0.95rem;
+    padding: 0.8rem;
+    font-size: 1rem;
   }
 }
 
