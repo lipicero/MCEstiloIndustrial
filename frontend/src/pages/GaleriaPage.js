@@ -8,16 +8,27 @@ const GaleriaPage = (props) => {
 
   // Datos de las imágenes con categorías y descripciones
   const imagenes = [
-    { src: "img/galeria/img1.webp", categoria: "muebles", descripcion: "Mesa de comedor industrial" },
-    { src: "img/galeria/img2.webp", categoria: "muebles", descripcion: "Biblioteca de hierro y madera" },
-    { src: "img/galeria/img3.webp", categoria: "portones", descripcion: "Portón corredizo moderno" },
-    { src: "img/galeria/img4.webp", categoria: "muebles", descripcion: "Rack para TV estilo industrial" },
-    { src: "img/galeria/img5.webp", categoria: "rejas", descripcion: "Reja de seguridad diseño minimalista" },
-    { src: "img/galeria/img6.jpg", categoria: "estructuras", descripcion: "Estructura metálica para terraza" },
-    { src: "img/galeria/img7.webp", categoria: "muebles", descripcion: "Mesa ratona de hierro y madera" },
-    { src: "img/galeria/img8.webp", categoria: "portones", descripcion: "Portón de entrada principal" },
-    { src: "img/galeria/img9.webp", categoria: "muebles", descripcion: "Escritorio con cajonera integrada" },
-    { src: "img/galeria/img10.webp", categoria: "estructuras", descripcion: "Barandas de escalera personalizadas" },
+    { src: "img/galeria/img1.webp", categoria: "estructuras", descripcion: "Posa Botella" },
+    { src: "img/galeria/img2.webp", categoria: "rejas", descripcion: "Rejas metálicas negras, funcionales" },
+    { src: "img/galeria/img3.webp", categoria: "estructuras", descripcion: "Perchero 50x22cm" },
+    { src: "img/galeria/img4.webp", categoria: "muebles", descripcion: "Mostrador de hierro y madera" },
+    { src: "img/galeria/img5.webp", categoria: "estructuras", descripcion: "Puerta corrediza rústica doble" },
+    { src: "img/galeria/img6.jpg", categoria: "estructuras", descripcion: "Puerta corredera rústica quemada" },
+    { src: "img/galeria/img7.webp", categoria: "muebles", descripcion: "Consola estrecha madera y metal" },
+    { src: "img/galeria/img8.webp", categoria: "estructuras", descripcion: "Estufa empotrada con reja" },
+    { src: "img/galeria/img9.webp", categoria: "muebles", descripcion: "Escritorio modular madera y metal" },
+    { src: "img/galeria/img10.webp", categoria: "muebles", descripcion: "Estantería modular madera y estructura metálica" },
+    { src: "img/galeria/img11.webp", categoria: "rejas", descripcion: "Porche cerrado con malla metálica" },
+    { src: "img/galeria/img12.webp", categoria: "muebles", descripcion: "Mesa auxiliar hierro y madera" },
+    { src: "img/galeria/img13.webp", categoria: "portones", descripcion: "Portón doble hoja, caño estructural y malla" },
+    { src: "img/galeria/img14.jpg", categoria: "muebles", descripcion: "Estante de madera y metal elegante" },
+    { src: "img/galeria/img15.jpg", categoria: "muebles", descripcion: "Estante de exhibición de madera y metal grande" },
+    { src: "img/galeria/img16.jpg", categoria: "muebles", descripcion: "Rack TV estilo industrial moderno" },
+    { src: "img/galeria/img17.jpg", categoria: "estructuras", descripcion: "Escalera de metal y madera de estilo moderno" },
+    { src: "img/galeria/img18.jpg", categoria: "muebles", descripcion: "Juego de tres estantes de madera y metal escalonados" },
+    { src: "img/galeria/img19.jpg", categoria: "muebles", descripcion: "Mesa ratona de madera y metal geométrica" },
+    { src: "img/galeria/img20.jpg", categoria: "muebles", descripcion: "Soporte de plantas" },
+    { src: "img/galeria/img21.jpg", categoria: "muebles", descripcion: "Estante de madera y metal" },
   ];
 
   const imagenesFiltradas = filtroActivo === 'todos' 
