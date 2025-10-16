@@ -7,7 +7,6 @@ import ContactoPage from './pages/ContactoPage';
 import HomePage from './pages/HomePage';
 import NosotrosPage from './pages/NosotrosPage';
 import GaleriaPage from './pages/GaleriaPage';
-import NovedadesPage from './pages/NovedadesPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/nosotros" element={<NosotrosPage />} />
           <Route path="/galeria" element={<GaleriaPage />} />
-          <Route path="/novedades" element={<NovedadesPage />} />
           <Route path="/contacto" element={<ContactoPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
