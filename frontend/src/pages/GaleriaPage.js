@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 
 const GaleriaPage = (props) => {
   const [filtroActivo, setFiltroActivo] = useState('todos');
+  const [animKey, setAnimKey] = useState(0);
 
   // Datos de las imágenes con categorías y descripciones
   const imagenes = [
@@ -34,6 +35,11 @@ const GaleriaPage = (props) => {
   const imagenesFiltradas = filtroActivo === 'todos' 
     ? imagenes 
     : imagenes.filter(img => img.categoria === filtroActivo);
+
+  const cambiarFiltro = (nuevoFiltro) => {
+    setFiltroActivo(nuevoFiltro);
+    setAnimKey(prev => prev + 1);
+  };
 
   useEffect(() => {
 
@@ -81,9 +87,7 @@ const GaleriaPage = (props) => {
 
     elementos.forEach(el => observer.observe(el));
 
-    // 7. Modal de galería
-    const gal = document.querySelector('.galeria');
-    if (!gal) return;
+    // 7. Modal de galería - Usar delegación de eventos desde document
     let modal = document.querySelector('.modal-img');       // Intenta obtener modal existente
     if (!modal) {                                           // Si no existe, lo crea
       modal = document.createElement('div');
@@ -95,10 +99,15 @@ const GaleriaPage = (props) => {
       document.body.appendChild(modal);                    // Lo añade al body
     }
 
-    var imgModal = modal.querySelector('img');              // Imagen dentro del modal
-    var cerrarBtn = modal.querySelector('.modal-close');    // Botón de cerrar modal
+    const imgModal = modal.querySelector('img');              // Imagen dentro del modal
+    const cerrarBtn = modal.querySelector('.modal-close');    // Botón de cerrar modal
 
-    gal.addEventListener('click', function (e) {             // Al hacer clic en la galería
+    // Usar delegación de eventos desde document para que funcione siempre
+    const handleGaleriaClick = (e) => {
+      // Verificar si el click fue dentro de .galeria
+      const galeriaElement = e.target.closest('.galeria');
+      if (!galeriaElement) return;
+
       // Buscar si el click fue en una imagen o en el contenedor de la imagen
       const clickedImg = e.target.tagName === 'IMG' ? e.target : e.target.closest('.galeria-item')?.querySelector('img');
       
@@ -106,8 +115,8 @@ const GaleriaPage = (props) => {
       
       imgModal.src = clickedImg.src;                        // Copia la URL de la imagen
       modal.style.display = 'flex';                         // Muestra el modal
-      setTimeout(() => modal.classList.add('open'), 10); // Añade clase de animación
-    });
+      setTimeout(() => modal.classList.add('open'), 10);    // Añade clase de animación
+    };
 
     const closeModal = (e) => {                                // Función para cerrar modal
       if (e.target === modal || e.target === cerrarBtn) {
@@ -116,28 +125,48 @@ const GaleriaPage = (props) => {
       }
     };
 
-    modal.addEventListener('click', closeModal);            // Clic en fondo cierra modal
-    cerrarBtn.addEventListener('click', closeModal);        // Clic en "×" cierra modal
-    document.addEventListener('keydown',(e) => {      // Esc cierra modal
-      if (e.key === 'Escape' && modal.style.display === 'flex') closeModal(e);
-    });
-
+    const handleEscapeKey = (e) => {
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        modal.classList.remove('open');
+        setTimeout(() => modal.style.display = 'none', 200);
+      }
+    };
 
     // ——— Hover aleatorio para galería ———
-    document.querySelectorAll('.galeria img').forEach(img => {
-      img.addEventListener('mouseenter', () => {
+    const handleMouseEnter = (e) => {
+      if (e.target && e.target.matches && e.target.matches('.galeria img')) {
         // Genera un ángulo aleatorio entre 1° y 2°
         const rnd = Math.random() * 2 + 1;
         // Decide si es positivo o negativo
         const angle = (Math.random() < 0.5 ? -1 : 1) * rnd;
         // Asigna la variable CSS para el rotate
-        img.style.setProperty('--rotate-angle', `${angle}deg`);
-      });
-      // Opcional: al salir, dejamos la variable en 0 para “deshacer” cualquier resto
-      img.addEventListener('mouseleave', () => {
-        img.style.setProperty('--rotate-angle', `0deg`);
-      });
-    });
+        e.target.style.setProperty('--rotate-angle', `${angle}deg`);
+      }
+    };
+
+    const handleMouseLeave = (e) => {
+      if (e.target && e.target.matches && e.target.matches('.galeria img')) {
+        e.target.style.setProperty('--rotate-angle', `0deg`);
+      }
+    };
+
+    // Agregar event listeners
+    document.addEventListener('click', handleGaleriaClick);
+    document.addEventListener('mouseenter', handleMouseEnter, true);
+    document.addEventListener('mouseleave', handleMouseLeave, true);
+    modal.addEventListener('click', closeModal);
+    cerrarBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', handleEscapeKey);
+
+    // Cleanup function para remover listeners
+    return () => {
+      document.removeEventListener('click', handleGaleriaClick);
+      document.removeEventListener('mouseenter', handleMouseEnter, true);
+      document.removeEventListener('mouseleave', handleMouseLeave, true);
+      modal.removeEventListener('click', closeModal);
+      cerrarBtn.removeEventListener('click', closeModal);
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
   }, []);
   
   return (
@@ -157,35 +186,35 @@ const GaleriaPage = (props) => {
         <section className="filtros-galeria fade-in">
           <button 
             className={`filtro-btn ${filtroActivo === 'todos' ? 'active' : ''}`}
-            onClick={() => setFiltroActivo('todos')}
+            onClick={() => cambiarFiltro('todos')}
           >
             <span className="filtro-icon">📦</span>
             Todos
           </button>
           <button 
             className={`filtro-btn ${filtroActivo === 'muebles' ? 'active' : ''}`}
-            onClick={() => setFiltroActivo('muebles')}
+            onClick={() => cambiarFiltro('muebles')}
           >
             <span className="filtro-icon">🪑</span>
             Muebles
           </button>
           <button 
             className={`filtro-btn ${filtroActivo === 'portones' ? 'active' : ''}`}
-            onClick={() => setFiltroActivo('portones')}
+            onClick={() => cambiarFiltro('portones')}
           >
             <span className="filtro-icon">🚪</span>
             Portones
           </button>
           <button 
             className={`filtro-btn ${filtroActivo === 'rejas' ? 'active' : ''}`}
-            onClick={() => setFiltroActivo('rejas')}
+            onClick={() => cambiarFiltro('rejas')}
           >
             <span className="filtro-icon">🛡️</span>
             Rejas
           </button>
           <button 
             className={`filtro-btn ${filtroActivo === 'estructuras' ? 'active' : ''}`}
-            onClick={() => setFiltroActivo('estructuras')}
+            onClick={() => cambiarFiltro('estructuras')}
           >
             <span className="filtro-icon">🏗️</span>
             Estructuras
@@ -193,7 +222,7 @@ const GaleriaPage = (props) => {
         </section>
 
         {/* Galería con descripciones */}
-        <div className="galeria fade-in">
+        <div className="galeria" key={animKey}>
           {imagenesFiltradas.map((img, index) => (
             <div key={index} className="galeria-item">
               <img 

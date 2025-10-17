@@ -92,6 +92,7 @@
   gap: 2rem;
   margin-bottom: 3rem;
   position: relative;
+  align-items: center;
 }
 
 .timeline-item:nth-child(odd) {
