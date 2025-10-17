@@ -8,9 +8,32 @@ const NosotrosPage = (props) => {
         // --- Fade-in al hacer scroll ---
         const elementos = document.querySelectorAll('.fade-in');
 
+        // Crear un observer temporal para verificar visibilidad inicial
+        const checkInitialVisibility = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    // Si está visible al cargar, mostrar inmediatamente
+                    entry.target.classList.add('visible');
+                    entry.target.style.transitionDelay = '0s';
+                }
+            });
+        }, {
+            rootMargin: '0px',
+            threshold: 0.1
+        });
+
+        // Verificar visibilidad inicial
+        elementos.forEach(el => checkInitialVisibility.observe(el));
+
+        // Desconectar el observer inicial después de un breve momento
+        setTimeout(() => {
+            checkInitialVisibility.disconnect();
+        }, 100);
+
+        // Observer principal para elementos que aparecen al hacer scroll
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
+                if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
                     const retraso = entry.target.dataset.delay
                         ? entry.target.dataset.delay + 's'
                         : (i * 0.15) + 's';
@@ -77,7 +100,7 @@ const NosotrosPage = (props) => {
                             <div className="timeline-content">
                                 <h3>Expansión</h3>
                                 <span className="timeline-date">2021-2023</span>
-                                <p>Incorporamos herrería, rejas, fibra de vidrio y zinguería.</p>
+                                <p>Incorporamos herrería, rejas y zinguería.</p>
                             </div>
                         </div>
                         <div className="timeline-item">
@@ -150,10 +173,6 @@ const NosotrosPage = (props) => {
                         <div className="servicio-item">
                             <span className="servicio-emoji">⚡</span>
                             <p>Zinguería</p>
-                        </div>
-                        <div className="servicio-item">
-                            <span className="servicio-emoji">🛡️</span>
-                            <p>Fibra de vidrio</p>
                         </div>
                     </div>
                 </section>

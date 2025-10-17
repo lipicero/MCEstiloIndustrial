@@ -9,9 +9,32 @@ const HomePage = (props) => {
     // --- Fade-in al hacer scroll ---
     const elementos = document.querySelectorAll('.fade-in');
 
+    // Crear un observer temporal para verificar visibilidad inicial
+    const checkInitialVisibility = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Si está visible al cargar, mostrar inmediatamente
+          entry.target.classList.add('visible');
+          entry.target.style.transitionDelay = '0s';
+        }
+      });
+    }, {
+      rootMargin: '0px',
+      threshold: 0.1
+    });
+
+    // Verificar visibilidad inicial
+    elementos.forEach(el => checkInitialVisibility.observe(el));
+
+    // Desconectar el observer inicial después de un breve momento
+    setTimeout(() => {
+      checkInitialVisibility.disconnect();
+    }, 100);
+
+    // Observer principal para elementos que aparecen al hacer scroll
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
           const retraso = entry.target.dataset.delay
             ? entry.target.dataset.delay + 's'
             : (i * 0.15) + 's';

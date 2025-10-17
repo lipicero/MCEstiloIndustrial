@@ -7,10 +7,39 @@ const ContactoPage = () => {
   useEffect(() => {
     // 2. Fade-in al hacer scroll
     var elementos = document.querySelectorAll(".fade-in");
+    
+    // Crear un observer temporal para verificar visibilidad inicial
+    var checkInitialVisibility = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            // Si está visible al cargar, mostrar inmediatamente
+            entry.target.classList.add("visible");
+            entry.target.style.transitionDelay = "0s";
+          }
+        });
+      },
+      {
+        rootMargin: "0px",
+        threshold: 0.1,
+      }
+    );
+
+    // Verificar visibilidad inicial
+    elementos.forEach(function (el) {
+      checkInitialVisibility.observe(el);
+    });
+
+    // Desconectar el observer inicial después de un breve momento
+    setTimeout(function () {
+      checkInitialVisibility.disconnect();
+    }, 100);
+
+    // Observer principal para elementos que aparecen al hacer scroll
     var observer = new IntersectionObserver(
       function (entries, obs) {
         entries.forEach(function (entry, i) {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !entry.target.classList.contains("visible")) {
             var retraso = entry.target.dataset.delay
               ? entry.target.dataset.delay + "s"
               : i * 0.15 + "s";
