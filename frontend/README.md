@@ -169,10 +169,8 @@ Copyright © 2025 MC Estilo Industrial. Todos los derechos reservados.
 
 ## 📞 Contacto
 
-- **Sitio Web**: [mcestiloindustrial.com](https://mcestiloindustrial.com)
-- **WhatsApp**: +54 9 11 XXXX-XXXX
-- **Instagram**: @mcestiloindustrial
-- **Email**: contacto@mcestiloindustrial.com
+- **Sitio Web**: [mcestiloindustrial.com](https://mcestiloindustrial.vercel.app)
+- **Instagram**: [@mcestiloindustrial](https://www.instagram.com/mc_estilo.industrial)
 
 ---
 
