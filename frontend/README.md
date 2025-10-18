@@ -1,70 +1,179 @@
-# Getting Started with Create React App
+# MC Estilo Industrial 🏗️
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sitio web corporativo para MC Estilo Industrial - Empresa dedicada a la fabricación de muebles y estructuras en hierro y madera con estilo industrial único.
 
-## Available Scripts
+![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat&logo=react)
+![CSS3](https://img.shields.io/badge/CSS3-Responsive-1572B6?style=flat&logo=css3)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-In the project directory, you can run:
+## 📋 Descripción
+
+Sitio web moderno y responsive desarrollado con React que presenta los servicios, galería de proyectos y canales de contacto de MC Estilo Industrial. La empresa se especializa en:
+
+- 🪑 Muebles de hierro y madera
+- 🚪 Portones personalizados
+- 🛡️ Rejas de seguridad
+- 🏗️ Estructuras metálicas
+
+## ✨ Características
+
+- **Diseño Responsive**: Adaptado a todos los dispositivos (móvil, tablet, desktop)
+- **Modo Claro/Oscuro**: Sistema de temas con persistencia en localStorage
+- **Galería Interactiva**: 
+  - Sistema de filtros por categorías
+  - Animaciones suaves al cambiar filtros
+  - Modal para visualización ampliada de imágenes
+  - Lazy loading de imágenes
+- **Animaciones Avanzadas**:
+  - Fade-in inteligente (aparición inmediata si el contenido está visible)
+  - Transiciones suaves entre secciones
+  - Efectos hover personalizados
+- **SEO Optimizado**: Meta tags dinámicos para cada página
+- **Timeline Interactivo**: Historia de la empresa con diseño visual atractivo
+- **Formulario de Contacto**: Validación de campos y experiencia de usuario mejorada
+
+## 🚀 Inicio Rápido
+
+### Prerrequisitos
+
+- Node.js 14.x o superior
+- npm o yarn
+
+### Instalación
+
+1. Clona el repositorio:
+```bash
+git clone https://github.com/lipicero/React.git
+cd React/frontend
+```
+
+2. Instala las dependencias:
+```bash
+npm install
+```
+
+3. Inicia el servidor de desarrollo:
+```bash
+npm start
+```
+
+4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+
+## 📁 Estructura del Proyecto
+
+```
+frontend/
+├── public/
+│   ├── img/
+│   │   └── galeria/          # Imágenes de proyectos
+│   ├── index.html
+│   └── manifest.json
+├── src/
+│   ├── components/
+│   │   ├── layout/           # Componentes de estructura
+│   │   │   ├── Header.js
+│   │   │   ├── Nav.js
+│   │   │   ├── Footer.js
+│   │   │   └── ThemeToggle.js
+│   │   └── SEO.js            # Componente de SEO
+│   ├── contexts/
+│   │   └── ThemeContext.js   # Context API para temas
+│   ├── pages/
+│   │   ├── HomePage.js
+│   │   ├── NosotrosPage.js
+│   │   ├── GaleriaPage.js
+│   │   ├── ContactoPage.js
+│   │   └── NotFoundPage.js
+│   ├── styles/
+│   │   └── components/       # CSS modular por componente
+│   ├── App.js
+│   └── index.js
+└── package.json
+```
+
+## 🛠️ Tecnologías Utilizadas
+
+- **React 18**: Biblioteca principal
+- **React Router DOM**: Navegación SPA
+- **React Helmet Async**: Gestión de meta tags dinámicos
+- **CSS3**: Estilos con variables CSS y animaciones
+- **Intersection Observer API**: Animaciones al hacer scroll
+- **localStorage**: Persistencia de preferencias del usuario
+
+## 📱 Páginas
+
+### Home
+- Hero section con presentación
+- Beneficios destacados
+- Carousel de proyectos
+
+### Nosotros
+- Historia visual con timeline
+- Estadísticas de la empresa
+- Perfil del fundador
+- Valores corporativos
+- Servicios ofrecidos
+
+### Galería
+- Sistema de filtros (Todos, Muebles, Portones, Rejas, Estructuras)
+- Grid responsive
+- Modal de visualización
+- Lazy loading de imágenes
+- Animaciones al cambiar filtros
+
+### Contacto
+- Formulario de contacto
+- Información de ubicación
+- Enlaces a redes sociales
+- Datos de contacto directo
+
+## 🎨 Características de Diseño
+
+- **Paleta de Colores**: Tonos industriales (grises, carbón, acentos madera)
+- **Tipografía**: Roboto (sans-serif moderno)
+- **Animaciones**: Transiciones suaves y naturales
+- **Accesibilidad**: Contraste adecuado y navegación por teclado
+- **Performance**: Lazy loading y optimización de recursos
+
+## 📦 Scripts Disponibles
 
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Ejecuta la aplicación en modo desarrollo en [http://localhost:3000](http://localhost:3000).
 
 ### `npm run build`
+Construye la aplicación optimizada para producción en la carpeta `build`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm test`
+Ejecuta los tests en modo interactivo.
 
 ### `npm run eject`
+⚠️ **Operación irreversible**: Expone la configuración de Create React App.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🌐 Deploy
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Para construir y desplegar la aplicación:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm run build
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+La carpeta `build` contendrá los archivos optimizados listos para producción.
 
-## Learn More
+## 🤝 Contribuciones
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Este es un proyecto privado para MC Estilo Industrial. Para sugerencias o mejoras, contacta al equipo de desarrollo.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📄 Licencia
 
-### Code Splitting
+Copyright © 2025 MC Estilo Industrial. Todos los derechos reservados.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📞 Contacto
 
-### Analyzing the Bundle Size
+- **Sitio Web**: [mcestiloindustrial.com](https://mcestiloindustrial.com)
+- **WhatsApp**: +54 9 11 XXXX-XXXX
+- **Instagram**: @mcestiloindustrial
+- **Email**: contacto@mcestiloindustrial.com
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Desarrollado con ❤️ por el equipo de MC Estilo Industrial
