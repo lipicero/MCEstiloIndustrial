@@ -214,7 +214,7 @@ nav.nav-sticky-top {
   color: var(--text-light);
   text-decoration: none;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transition: background 0.3s, color 0.3s, transform 0.2s;
   border-radius: 6px;
   font-size: 0.95rem;
@@ -271,10 +271,10 @@ nav.nav-sticky-top {
 .nav-menu li a::after {
   content: "";
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   left: 50%;
   width: 0;
-  height: 3px;
+  height: 1px;
   background: var(--wood-accent);
   transition: width 0.3s ease, left 0.3s ease;
 }
@@ -287,8 +287,8 @@ nav.nav-sticky-top {
 /* Línea visible en página activa */
 .nav-menu li a.active::after,
 .nav-menu li a.activo::after {
-  left: 0;
-  width: 100%;
+  left: 0 !important;
+  width: 100% !important;
 }
 
 /* Color de línea en tema oscuro */

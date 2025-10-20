@@ -99,10 +99,10 @@ const Nav = (props) => {
         <nav>
             <div className="nav-container">
                 <ul className="nav-menu">
-                    <li><NavLink to="/" className={({ isActive }) => isActive ? "activo" : undefined}>Home</NavLink></li>
-                    <li><NavLink to="/nosotros" className={({ isActive }) => isActive ? "activo" : undefined}>Nosotros</NavLink></li>
-                    <li><NavLink to="/galeria" className={({ isActive }) => isActive ? "activo" : undefined}>Galería</NavLink></li>
-                    <li><NavLink to="/contacto" className={({ isActive }) => isActive ? "activo" : undefined}>Contacto</NavLink></li>
+                    <li><NavLink to="/" end>Home</NavLink></li>
+                    <li><NavLink to="/nosotros">Nosotros</NavLink></li>
+                    <li><NavLink to="/galeria">Galería</NavLink></li>
+                    <li><NavLink to="/contacto">Contacto</NavLink></li>
                 </ul>
                 <ThemeToggle />
                 <button className="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
