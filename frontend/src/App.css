@@ -1,0 +1,152 @@
+:root {
+  /* Colores base */
+  --charcoal: #2c2c2c;
+  --slate: #4a4a4a;
+  --silver: #cfcfcf;
+  --wood-accent: #a67c52;
+  --white: #ffffff;
+  
+  /* Medidas */
+  --esp: 1rem;
+  --max-w: 960px;
+  
+  /* Light Theme */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7fafc;
+  --text-primary: #1a1a1a;
+  --text-secondary: #2d3748;
+  --text-dark: #1a1a1a;
+  --text-light: #f5f5f5;
+  --border-color: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Theme - Paleta Industrial (Herrería) */
+.dark-theme {
+  /* Fondos oscuros con tono de hierro/acero */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2a2a2a;
+  --bg-tertiary: #3a3a3a;
+  
+  /* Textos claros con tono cálido */
+  --text-primary: #f5f5f5;
+  --text-secondary: #d0d0d0;
+  --text-dark: #f5f5f5;
+  --text-light: #f5f5f5;
+  
+  /* Bordes y sombras */
+  --border-color: #4a4a4a;
+  --shadow: rgba(0, 0, 0, 0.6);
+  
+  /* Colores base adaptados */
+  --charcoal: #2a2a2a;
+  --slate: #3a3a3a;
+  --silver: #6a6a6a;
+  --white: #1a1a1a;
+  
+  /* Acentos industriales */
+  --accent-rust: #d9854f;
+  --accent-wood: #9d7d52;
+  --accent-steel: #8a9ba8;
+  --accent-fire: #e88547;
+}
+
+.dark-theme body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Mejoras visuales para elementos específicos en tema oscuro */
+.dark-theme a {
+    color: var(--accent-rust);
+}
+
+.dark-theme a:hover {
+    color: var(--accent-fire);
+}
+
+/* Box sizing global */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Tipografía y fondo global del sitio */
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font: 400 1rem/1.5 'Open Sans', sans-serif;
+  color: var(--text-dark);
+  background: var(--white);
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor ancho máximo reutilizable */
+.holder {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--esp);
+}
+
+/* Contenedor principal de la aplicación */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Wrapper para el contenido principal */
+.main-content {
+  flex: 1 0 auto;
+}
+
+/* Mejora de UX en móviles: quitar destello/tap highlight y outlines en enlaces/botones del menú */
+button,
+a,
+.nav-menu li a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+a:focus,
+.slider-btn:focus,
+.nav-menu li a:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Transiciones comunes para enlaces de menú y botones */
+.nav-menu li a,
+.btn,
+.btn-enviar {
+  display: inline-block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-menu li a:hover,
+.btn:hover,
+.btn-enviar:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Accesibilidad: respeta usuarios con animaciones reducidas */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

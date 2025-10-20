@@ -1,0 +1,102 @@
+/* Tamaño del logotipo en el header */
+.img-logo {
+  max-width: 50px;
+  height: auto;
+}
+
+/* Encabezado con logo y título - Sticky siempre visible */
+header {
+  background-color: var(--charcoal);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  margin-bottom: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Eliminamos la clase header-hidden - ya no se usa */
+
+.header-container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+header h1 {
+  color: var(--text-light);
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-style: normal;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  margin: 0;
+  white-space: nowrap;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Tema oscuro para header */
+.dark-theme header {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dark-theme header h1 {
+  color: var(--text-primary);
+}
+
+/* Responsive - Pantallas pequeñas */
+@media (max-width: 768px) {
+  .img-logo {
+    max-width: 45px;
+  }
+
+  header {
+    padding: 0.8rem 0;
+  }
+
+  .header-container {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+
+  header h1 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .img-logo {
+    max-width: 55px;
+  }
+
+  header {
+    padding: 0.6rem 0;
+  }
+
+  .header-container {
+    padding: 0 0.8rem;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  .logo-section {
+    gap: 0.5rem;
+  }
+}

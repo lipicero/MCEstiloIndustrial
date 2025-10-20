@@ -1,0 +1,317 @@
+h2 {
+  color: var(--charcoal);
+  font-weight: 400;
+  margin-top: var(--esp);
+}
+
+/* Mejora de contraste en tema oscuro */
+.dark-theme h2 {
+  color: var(--text-primary);
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme p {
+  color: var(--text-secondary);
+}
+
+/* Sección de beneficios (tarjetas con iconos y texto) */
+.beneficios {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+  background: #fafafc;
+  border-radius: 16px;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.beneficio {
+  flex: 1 1 180px;
+  max-width: 210px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem 1rem 1.2rem 1rem;
+  box-shadow: 0 3px 12px #2c2c2c08;
+  text-align: center;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+/* Tema oscuro para beneficios */
+.dark-theme .beneficios {
+  background: var(--bg-tertiary);
+}
+
+.dark-theme .beneficio {
+  background: var(--bg-secondary);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+}
+
+.beneficio .icon-material,
+.beneficio .icon-personalizado,
+.beneficio .icon-tiempo,
+.beneficio .icon-atencion {
+  display: inline-block;
+  margin-bottom: 0.6em;
+  width: 42px;
+  height: 42px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Iconos embebidos vía data-URI SVG para beneficios */
+.icon-material {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="black" stroke-width="2" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="10" width="24" height="14" rx="3" fill="%23a67c52" stroke="black"/><rect x="8" y="6" width="16" height="4" rx="1.5" fill="%23cfcfcf" stroke="black"/></svg>');
+}
+
+.icon-personalizado {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="black" stroke-width="2" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="10" fill="%23cfcfcf" stroke="black"/><path d="M16 10v6h5" stroke="%23a67c52" stroke-width="2.5"/></svg>');
+}
+
+.icon-tiempo {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="black" stroke-width="2" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" fill="%23fff" stroke="%23a67c52"/><path d="M16 11v6l4 2" stroke="black" stroke-width="2.3"/></svg>');
+}
+
+.icon-atencion {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="black" stroke-width="2" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="12" r="6" fill="%23cfcfcf" stroke="black"/><rect x="8" y="20" width="16" height="7" rx="3" fill="%23a67c52" stroke="black"/></svg>');
+}
+
+.beneficio h3 {
+  margin: 0.5em 0 0.3em 0;
+  color: var(--charcoal);
+  font-size: 1.12em;
+}
+
+.beneficio p {
+  color: #444;
+  font-size: 0.98em;
+}
+
+/* Tema oscuro para texto de beneficios */
+.dark-theme .beneficio h3 {
+  color: var(--text-primary);
+}
+
+.dark-theme .beneficio p {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .beneficios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.2rem 0;
+    padding: 0.7rem;
+    background: #fafafc;
+    border-radius: 12px;
+    width: 100%;
+  }
+
+  .beneficio {
+    min-width: 0;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 0.7rem;
+    max-width: 100%;
+  }
+}
+
+/* Componente Slider: envoltorio y tamaños base */
+.slider-holder {
+  max-width: 680px;
+  margin: 2rem auto;
+  padding: 0;
+}
+
+/* Marco del slider con borde redondeado y sombra */
+.slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 3px 18px #2c2c2c22;
+  background: #fff;
+  max-width: 480px;
+  /* Ajusta según gusto, ancho máximo */
+  margin: 2rem auto;
+  min-height: 360px;
+  /* Altura mínima si lo necesitas */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pista del slider que se desplaza horizontalmente */
+.slider-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+  will-change: transform;
+  width: 100%;
+  align-items: center;
+}
+
+.slider-track img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 16px;
+  background: #eaeaea;
+  user-select: none;
+  pointer-events: none;
+  transition: filter 0.2s;
+  display: block;
+}
+
+/* Botones anterior/siguiente flotantes del slider */
+.slider-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--wood-accent);
+  border: none;
+  color: #fff;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px #2c2c2c30;
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0.85;
+  transition: background 0.22s, opacity 0.15s, transform 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+
+.slider-btn-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.slider-btn-inner svg {
+  width: 65%;
+  height: 65%;
+  margin: 0;
+  pointer-events: none;
+}
+
+.slider-btn.prev {
+  left: 0.7rem;
+}
+
+.slider-btn.next {
+  right: 0.7rem;
+}
+
+/* Indicadores (puntos) de posición del slider */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  margin: 0.6rem 0 0.2rem 0;
+  gap: 0.45rem;
+}
+
+.slider-dots button {
+  background: var(--silver);
+  border: none;
+  width: 0.88rem;
+  height: 0.88rem;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: background 0.18s, opacity 0.16s;
+  outline: none;
+}
+
+.slider-dots button.active {
+  background: var(--wood-accent);
+  opacity: 1;
+}
+
+/* Interacciones hover del slider solo en desktop */
+@media (min-width: 769px) {
+  .slider-btn-inner.animate-tap {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .slider-btn:hover,
+  .slider-btn:focus,
+  .slider-btn:active {
+    background: var(--slate);
+    opacity: 1;
+    transform: scale(1.1) translateY(-50%);
+    outline: none;
+  }
+}
+
+/* Ajustes del slider en móviles medianos: imágenes y feedback táctil */
+@media (max-width: 650px) {
+  .slider-track img {
+    aspect-ratio: 3 / 2;
+    min-height: 160px;
+    max-height: 400px;
+    object-fit: contain !important;
+    background: #f7f7f7;
+  }
+
+  @keyframes btnBounce {
+    0% {
+      transform: translateY(-50%) scale(1);
+    }
+
+    45% {
+      transform: translateY(-50%) scale(0.88);
+    }
+
+    70% {
+      transform: translateY(-50%) scale(1.2);
+    }
+
+    100% {
+      transform: translateY(-50%) scale(1);
+    }
+  }
+
+  .slider-btn.animate-tap {
+    animation: btnBounce 0.28s cubic-bezier(0.46, 1.67, 0.53, 0.88) both;
+  }
+
+  .slider-btn:hover,
+  .slider-btn:focus,
+  .slider-btn:active {
+    /* No hacer scale ni fondo distinto en móvil */
+    background: var(--wood-accent);
+    opacity: 0.85;
+    transform: translateY(-50%);
+  }
+}
+
+/* Ajustes del slider en móviles pequeños */
+@media (max-width: 480px) {
+  .slider-holder {
+    max-width: 100vw;
+  }
+
+  .slider-track img {
+    border-radius: 20px;
+    aspect-ratio: 1 / 1;
+    min-height: 170px;
+    max-height: 480px;
+    object-fit: contain !important;
+    background: #f7f7f7;
+  }
+
+  .slider-btn {
+    font-size: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}

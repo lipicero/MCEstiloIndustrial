@@ -1,0 +1,66 @@
+/* Pie de página sencillo con contraste alto */
+footer {
+  background-color: var(--charcoal);
+  text-align: center;
+  padding: var(--esp) 0;
+  color: var(--text-light);
+  margin-top: calc(var(--esp) * 2);
+}
+/* Botón flotante para volver arriba */
+#scroll-top {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--wood-accent);
+  color: var(--text-light);
+  border: none;
+  border-radius: 20%;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  z-index: 998;
+  opacity: 0;
+  transform: translateY(20px) translateZ(0);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    background 0.3s ease;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+#scroll-top.show {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+  pointer-events: auto;
+}
+
+#scroll-top:hover {
+  background: var(--slate);
+  transform: translateY(-2px) translateZ(0);
+}
+
+/* Tema oscuro para footer */
+.dark-theme footer {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-top: 1px solid var(--border-color);
+}
+
+.dark-theme #scroll-top {
+  background: var(--accent-rust);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.dark-theme #scroll-top:hover {
+  background: var(--accent-fire);
+  transform: translateY(-2px) translateZ(0);
+}

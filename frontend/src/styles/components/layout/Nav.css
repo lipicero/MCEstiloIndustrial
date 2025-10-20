@@ -1,0 +1,455 @@
+/* Backdrop/Overlay menú abierto */
+.nav-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  pointer-events: none;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  transition: opacity 0.5s ease;
+  background: transparent;
+  z-index: 500;
+  display: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+.nav-backdrop--visible {
+  display: block;
+  pointer-events: auto;
+}
+
+/* Desactivar todos los hovers y pointer-events cuando el menú está abierto */
+body.nav-menu-open * {
+  pointer-events: none !important;
+}
+
+body.nav-menu-open .nav-toggle,
+body.nav-menu-open .nav-toggle *,
+body.nav-menu-open .nav-menu,
+body.nav-menu-open .nav-menu *,
+body.nav-menu-open .nav-backdrop {
+  pointer-events: auto !important;
+}
+
+/* Ocultar backdrop en desktop */
+@media (min-width: 769px) {
+  .nav-backdrop {
+    display: none !important;
+  }
+}
+
+/* Barra de navegación integrada en el header */
+nav {
+  background-color: transparent;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1000;
+  transition: none;
+  box-shadow: none;
+  margin-top: 0;
+  border: none;
+}
+
+/* Eliminamos el comportamiento nav-sticky-top */
+nav.nav-sticky-top {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+/* Tema oscuro para nav - sin bordes ni fondos */
+.dark-theme nav {
+  background-color: transparent;
+  border: none;
+}
+
+.dark-theme nav.nav-sticky-top {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+/* Contenedor centrado y responsive del nav */
+.nav-container {
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  min-height: auto;
+  padding: 0;
+  position: relative;
+}
+
+/* Botón hamburguesa (abre/cierra el menú en móvil) - Lado derecho */
+.nav-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 32px;
+  height: 32px;
+  background-color: var(--wood-accent);
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid var(--text-light);
+  cursor: pointer;
+  z-index: 1000;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-toggle span {
+  width: 20px;
+  height: 2px;
+  background: var(--text-light);
+  border-radius: 2px;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+}
+
+.nav-toggle:hover {
+  background-color: var(--slate);
+}
+
+.nav-toggle:hover span {
+  background: var(--charcoal);
+}
+
+/* Estado "open": convierte el ícono hamburguesa en una "X" */
+.nav-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.nav-toggle.open:hover {
+  background-color: var(--slate);
+}
+
+.nav-toggle.open:hover span {
+  background: var(--charcoal);
+}
+
+/* Menú desplegable (cerrado por defecto en móvil) */
+.nav-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0rem;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  overflow: hidden;
+  background-color: var(--slate);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+  z-index: 500;
+}
+
+/* Menú visible (estado abierto) */
+.nav-menu--visible {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-menu li {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.nav-menu--visible li {
+  animation: navLinkFade 0.3s forwards ease;
+}
+
+.nav-menu--visible li:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.nav-menu--visible li:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.nav-menu--visible li:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.nav-menu--visible li:nth-child(4) {
+  animation-delay: 0.25s;
+}
+
+/* Animación de aparición progresiva para ítems de navegación */
+@keyframes navLinkFade {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.nav-menu li a {
+  display: block;
+  padding: 0.5rem 1.2rem;
+  text-align: center;
+  color: var(--text-light);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  background: none;
+}
+
+.nav-menu li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Tema oscuro para enlaces del menú */
+.dark-theme .nav-menu li a {
+  color: var(--text-primary);
+  background: none;
+}
+
+.dark-theme .nav-menu li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.dark-theme .nav-menu {
+  background-color: var(--bg-secondary);
+}
+
+.dark-theme .nav-toggle {
+  background-color: var(--accent-rust);
+  border-color: var(--accent-wood);
+}
+
+.dark-theme .nav-toggle span {
+  background: var(--text-primary);
+}
+
+.dark-theme .nav-toggle:hover {
+  background-color: var(--accent-fire);
+}
+
+/* Estilo activo más visible - solo con línea */
+.nav-menu li a.active,
+.nav-menu li a.activo {
+  color: var(--wood-accent);
+  font-weight: 500;
+}
+
+.dark-theme .nav-menu li a.active,
+.dark-theme .nav-menu li a.activo {
+  color: var(--accent-rust);
+}
+
+/* Línea decorativa bajo los enlaces */
+.nav-menu li a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: var(--wood-accent);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-menu li a:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+/* Línea visible en página activa */
+.nav-menu li a.active::after,
+.nav-menu li a.activo::after {
+  left: 0;
+  width: 100%;
+}
+
+/* Color de línea en tema oscuro */
+.dark-theme .nav-menu li a::after {
+  background: var(--accent-rust);
+}
+
+/* Navegación de escritorio: menú siempre visible y centrado */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-menu {
+    max-height: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    position: static;
+    overflow: visible;
+    background: none !important;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0;
+  }
+
+  .nav-menu li {
+    opacity: 1;
+    transform: none;
+    padding: 0 0;
+  }
+
+  .nav-menu li a {
+    padding: 0.6rem 1rem;
+  }
+
+  .nav-container {
+    justify-content: flex-end;
+  }
+
+  /* Forzar que el nav-menu no tenga fondo en desktop */
+  .dark-theme .nav-menu {
+    background: none !important;
+  }
+}
+
+/* Transiciones comunes para enlaces de menú y botones */
+.nav-menu li a {
+  display: inline-block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+/* Navegación móvil y ajustes de columnas en pantallas pequeñas */
+@media (max-width: 768px) {
+  nav {
+    margin-bottom: 0;
+  }
+
+  .nav-container {
+    padding: 0.5rem 1rem;
+    min-height: 2.5rem;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: flex;
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 0 auto;
+    z-index: 1002;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 1rem 0;
+    background-color: rgba(44, 44, 44, 0.98);
+    position: fixed;
+    top: 82px;
+    z-index: 999;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 12px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .dark-theme .nav-menu {
+    background-color: rgba(30, 30, 30, 0.98);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-menu li {
+    width: 100%;
+    display: flex;
+    margin-bottom: 0;
+    justify-content: center;
+    opacity: 1;
+    transform: none;
+  }
+
+  .nav-menu li a {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0;
+  }
+
+  /* Estilos para link activo en móvil */
+  .nav-menu li a.activo,
+  .nav-menu li a.active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: var(--wood-accent) !important;
+    font-weight: 600;
+  }
+
+  .dark-theme .nav-menu li a.activo,
+  .dark-theme .nav-menu li a.active {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--accent-rust) !important;
+  }
+
+  .nav-menu li a::after {
+    display: none;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0.8rem;
+    min-height: 2rem;
+  }
+
+  .nav-toggle {
+    width: 34px;
+    height: 30px;
+    padding: 6px;
+  }
+
+  .nav-toggle span {
+    height: 2.5px;
+  }
+
+  .nav-menu {
+    top: 76px;
+  }
+
+  .nav-menu li a {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+}
