@@ -132,7 +132,7 @@ const GaleriaPage = (props) => {
       }
     };
 
-    // ——— Hover aleatorio para galería ———
+    // Hover aleatorio para galería
     const handleMouseEnter = (e) => {
       if (e.target && e.target.matches && e.target.matches('.galeria img')) {
         // Genera un ángulo aleatorio entre 1° y 2°
