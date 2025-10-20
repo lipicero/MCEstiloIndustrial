@@ -35,6 +35,7 @@ const Nav = (props) => {
 
         const toggleMenu = (e) => {
             e.preventDefault();
+            e.stopPropagation();
             const abierto = btn.getAttribute('aria-expanded') === 'true';
             btn.setAttribute('aria-expanded', String(!abierto));
             menu.classList.toggle('nav-menu--visible');
@@ -77,22 +78,17 @@ const Nav = (props) => {
                 }
             });
         });
+        // Usar solo click para evitar duplicación de eventos en móvil
         btn.addEventListener('click', toggleMenu);
-        btn.addEventListener('touchend', toggleMenu);
         backdrop.addEventListener('click', cerrarMenu, true);
-        backdrop.addEventListener('touchend', cerrarMenu, true);
         document.addEventListener('click', cerrarSiFuera, true);
-        document.addEventListener('touchend', cerrarSiFuera, true);
 
         // Limpieza al desmontar
         return () => {
             window.removeEventListener('resize', actualizarMenuDesktop);
             btn.removeEventListener('click', toggleMenu);
-            btn.removeEventListener('touchend', toggleMenu);
             backdrop.removeEventListener('click', cerrarMenu, true);
-            backdrop.removeEventListener('touchend', cerrarMenu, true);
             document.removeEventListener('click', cerrarSiFuera, true);
-            document.removeEventListener('touchend', cerrarSiFuera, true);
             enlaces.forEach(enlace => {
                 enlace.removeEventListener('click', cerrarMenu);
             });
