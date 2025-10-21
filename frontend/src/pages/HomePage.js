@@ -136,7 +136,6 @@ dots.innerHTML = '';
         keywords="muebles industriales, diseño industrial, muebles de hierro, decoración industrial, muebles personalizados, MC estilo industrial"
       />
       <main className="holder">
-
       <div className="columnas">
         <section className="bienvenidos fade-in">
           <h2>Bienvenido!</h2>
