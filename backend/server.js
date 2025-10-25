@@ -31,6 +31,9 @@ const transporter = nodemailer.createTransport({
   secure: true, // Usa SSL
   pool: true, // Reutiliza conexiones
   maxConnections: 1, // Limita conexiones para evitar bloqueos
+  connectionTimeout: 10000, // 10 segundos para conectar
+  greetingTimeout: 10000, // 10 segundos para saludo
+  socketTimeout: 30000, // 30 segundos para socket
 });
 
 // Cache simple para evitar emails duplicados (últimos 30 segundos)
@@ -271,5 +274,5 @@ app.get("/api/galeria", (req, res) => {
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en ${PORT}`);
+  console.log(`Servidor corriendo en puerto: ${PORT}`);
 });
