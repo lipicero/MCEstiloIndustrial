@@ -22,11 +22,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configurar Nodemailer
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    pass: process.env.EMAIL_PASS
   },
+  // Agregar opciones para producción
+  secure: true, // Usa SSL
+  pool: true, // Reutiliza conexiones
+  maxConnections: 1, // Limita conexiones para evitar bloqueos
 });
 
 // Cache simple para evitar emails duplicados (últimos 30 segundos)
@@ -69,8 +73,9 @@ app.post(
     console.log("Mensaje de contacto:", { name, email, message });
 
     try {
+      console.log("Intentando enviar email a:", process.env.EMAIL_TO);
       // Enviar email
-      await transporter.sendMail({
+      const info = await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: process.env.EMAIL_TO,
         subject: `Nuevo mensaje de contacto - MC Estilo Industrial`,
@@ -133,6 +138,8 @@ app.post(
         `,
       });
 
+      console.log("Email enviado exitosamente:", info.messageId);
+
       // Agregar a cache
       sentEmails.set(key, now);
 
@@ -143,7 +150,8 @@ app.post(
 
       res.json({ message: "Mensaje enviado con éxito" });
     } catch (error) {
-      console.error("Error enviando email:", error);
+      console.error("Error enviando email:", error.message);
+      console.error("Detalles del error:", error);
       res.status(500).json({ message: "Error al enviar el mensaje" });
     }
   }
