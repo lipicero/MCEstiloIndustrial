@@ -2,9 +2,10 @@
   "name": "mcestilo-industrial",
   "version": "2.0.0",
   "scripts": {
-    "start": "concurrently \"npm start --prefix frontend\""
+    "start": "cross-env NODE_OPTIONS=--no-deprecation concurrently \"npm start --prefix frontend\" \"npm start --prefix backend\""
   },
   "devDependencies": {
-    "concurrently": "^8.0.0"
+    "concurrently": "^8.0.0",
+    "cross-env": "^7.0.3"
   }
 }
