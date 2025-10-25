@@ -1,18 +1,20 @@
-require('dotenv').config({ silent: true });
-const express = require('express');
-const cors = require('cors');
-const multer = require('multer');
-const nodemailer = require('nodemailer');
-const { body, validationResult } = require('express-validator');
+require("dotenv").config({ silent: true });
+const express = require("express");
+const cors = require("cors");
+const multer = require("multer");
+const nodemailer = require("nodemailer");
+const { body, validationResult } = require("express-validator");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : ['http://localhost:3000'];
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : ["http://localhost:3000"];
 const corsOptions = {
   origin: allowedOrigins,
-  credentials: true
+  credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -20,31 +22,32 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configurar Nodemailer
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
 // Cache simple para evitar emails duplicados (últimos 30 segundos)
 const sentEmails = new Map();
 
 // Rutas básicas
-app.get('/', (req, res) => {
-  res.json({ message: 'Bienvenido al backend de MC Estilo Industrial' });
+app.get("/", (req, res) => {
+  res.json({ message: "Bienvenido al backend de MC Estilo Industrial" });
 });
 
-app.get('/api/test', (req, res) => {
-  res.json({ data: 'Esta es una respuesta de prueba del backend' });
+app.get("/api/test", (req, res) => {
+  res.json({ data: "Esta es una respuesta de prueba del backend" });
 });
 
-app.post('/api/contact', 
+app.post(
+  "/api/contact",
   multer().none(),
   [
-    body('name').notEmpty().withMessage('El nombre es obligatorio'),
-    body('email').isEmail().withMessage('Email inválido'),
-    body('message').notEmpty().withMessage('El mensaje es obligatorio')
+    body("name").notEmpty().withMessage("El nombre es obligatorio"),
+    body("email").isEmail().withMessage("Email inválido"),
+    body("message").notEmpty().withMessage("El mensaje es obligatorio"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -57,17 +60,20 @@ app.post('/api/contact',
     const now = Date.now();
 
     // Verificar si se envió recientemente (últimos 30 segundos)
-    if (sentEmails.has(key) && (now - sentEmails.get(key)) < 30000) {
-      return res.status(429).json({ message: 'Mensaje ya enviado recientemente' });
+    if (sentEmails.has(key) && now - sentEmails.get(key) < 30000) {
+      return res
+        .status(429)
+        .json({ message: "Mensaje ya enviado recientemente" });
     }
 
-    console.log('Mensaje de contacto:', { name, email, message });
+    console.log("Mensaje de contacto:", { name, email, message });
 
     try {
       // Enviar email
       await transporter.sendMail({
+        from: process.env.EMAIL_USER,
         to: process.env.EMAIL_TO,
-                subject: `Nuevo mensaje de contacto - MC Estilo Industrial`,
+        subject: `Nuevo mensaje de contacto - MC Estilo Industrial`,
         html: `
           <!DOCTYPE html>
           <html lang="es">
@@ -110,10 +116,10 @@ app.post('/api/contact',
                 
                 <div class="field">
                   <label>Mensaje:</label>
-                  <p>${message.replace(/\n/g, '<br>')}</p>
+                  <p>${message.replace(/\n/g, "<br>")}</p>
                 </div>
                 
-                <p>Fecha y hora: ${new Date().toLocaleString('es-ES')}</p>
+                <p>Fecha y hora: ${new Date().toLocaleString("es-ES")}</p>
                 
                 <p>Para responder, simplemente haz clic en "Responder" en este email.</p>
               </div>
@@ -124,7 +130,7 @@ app.post('/api/contact',
             </div>
           </body>
           </html>
-        `
+        `,
       });
 
       // Agregar a cache
@@ -135,39 +141,123 @@ app.post('/api/contact',
         if (now - time > 30000) sentEmails.delete(k);
       }
 
-      res.json({ message: 'Mensaje enviado con éxito' });
+      res.json({ message: "Mensaje enviado con éxito" });
     } catch (error) {
-      console.error('Error enviando email:', error);
-      res.status(500).json({ message: 'Error al enviar el mensaje' });
+      console.error("Error enviando email:", error);
+      res.status(500).json({ message: "Error al enviar el mensaje" });
     }
   }
 );
 
 const imagenes = [
-  { src: "img/galeria/img1.webp", categoria: "estructuras", descripcion: "Posa Botella" },
-  { src: "img/galeria/img2.webp", categoria: "rejas", descripcion: "Rejas metálicas negras, funcionales" },
-  { src: "img/galeria/img3.webp", categoria: "estructuras", descripcion: "Perchero 50x22cm" },
-  { src: "img/galeria/img4.webp", categoria: "muebles", descripcion: "Mostrador de hierro y madera" },
-  { src: "img/galeria/img5.webp", categoria: "estructuras", descripcion: "Puerta corrediza rústica doble" },
-  { src: "img/galeria/img6.jpg", categoria: "estructuras", descripcion: "Puerta corredera rústica quemada" },
-  { src: "img/galeria/img7.webp", categoria: "muebles", descripcion: "Consola estrecha madera y metal" },
-  { src: "img/galeria/img8.webp", categoria: "estructuras", descripcion: "Estufa empotrada con reja" },
-  { src: "img/galeria/img9.webp", categoria: "muebles", descripcion: "Escritorio modular madera y metal" },
-  { src: "img/galeria/img10.webp", categoria: "muebles", descripcion: "Estantería modular madera y estructura metálica" },
-  { src: "img/galeria/img11.webp", categoria: "rejas", descripcion: "Porche cerrado con malla metálica" },
-  { src: "img/galeria/img12.webp", categoria: "muebles", descripcion: "Mesa auxiliar hierro y madera" },
-  { src: "img/galeria/img13.webp", categoria: "portones", descripcion: "Portón doble hoja, caño estructural y malla" },
-  { src: "img/galeria/img14.jpg", categoria: "muebles", descripcion: "Estante de madera y metal elegante" },
-  { src: "img/galeria/img15.jpg", categoria: "muebles", descripcion: "Estante de exhibición de madera y metal grande" },
-  { src: "img/galeria/img16.jpg", categoria: "muebles", descripcion: "Rack TV estilo industrial moderno" },
-  { src: "img/galeria/img17.jpg", categoria: "estructuras", descripcion: "Escalera de metal y madera de estilo moderno" },
-  { src: "img/galeria/img18.jpg", categoria: "muebles", descripcion: "Juego de tres estantes de madera y metal escalonados" },
-  { src: "img/galeria/img19.jpg", categoria: "muebles", descripcion: "Mesa ratona de madera y metal geométrica" },
-  { src: "img/galeria/img20.jpg", categoria: "muebles", descripcion: "Soporte de plantas" },
-  { src: "img/galeria/img21.jpg", categoria: "muebles", descripcion: "Estante de madera y metal" },
+  {
+    src: "img/galeria/img1.webp",
+    categoria: "estructuras",
+    descripcion: "Posa Botella",
+  },
+  {
+    src: "img/galeria/img2.webp",
+    categoria: "rejas",
+    descripcion: "Rejas metálicas negras, funcionales",
+  },
+  {
+    src: "img/galeria/img3.webp",
+    categoria: "estructuras",
+    descripcion: "Perchero 50x22cm",
+  },
+  {
+    src: "img/galeria/img4.webp",
+    categoria: "muebles",
+    descripcion: "Mostrador de hierro y madera",
+  },
+  {
+    src: "img/galeria/img5.webp",
+    categoria: "estructuras",
+    descripcion: "Puerta corrediza rústica doble",
+  },
+  {
+    src: "img/galeria/img6.jpg",
+    categoria: "estructuras",
+    descripcion: "Puerta corredera rústica quemada",
+  },
+  {
+    src: "img/galeria/img7.webp",
+    categoria: "muebles",
+    descripcion: "Consola estrecha madera y metal",
+  },
+  {
+    src: "img/galeria/img8.webp",
+    categoria: "estructuras",
+    descripcion: "Estufa empotrada con reja",
+  },
+  {
+    src: "img/galeria/img9.webp",
+    categoria: "muebles",
+    descripcion: "Escritorio modular madera y metal",
+  },
+  {
+    src: "img/galeria/img10.webp",
+    categoria: "muebles",
+    descripcion: "Estantería modular madera y estructura metálica",
+  },
+  {
+    src: "img/galeria/img11.webp",
+    categoria: "rejas",
+    descripcion: "Porche cerrado con malla metálica",
+  },
+  {
+    src: "img/galeria/img12.webp",
+    categoria: "muebles",
+    descripcion: "Mesa auxiliar hierro y madera",
+  },
+  {
+    src: "img/galeria/img13.webp",
+    categoria: "portones",
+    descripcion: "Portón doble hoja, caño estructural y malla",
+  },
+  {
+    src: "img/galeria/img14.jpg",
+    categoria: "muebles",
+    descripcion: "Estante de madera y metal elegante",
+  },
+  {
+    src: "img/galeria/img15.jpg",
+    categoria: "muebles",
+    descripcion: "Estante de exhibición de madera y metal grande",
+  },
+  {
+    src: "img/galeria/img16.jpg",
+    categoria: "muebles",
+    descripcion: "Rack TV estilo industrial moderno",
+  },
+  {
+    src: "img/galeria/img17.jpg",
+    categoria: "estructuras",
+    descripcion: "Escalera de metal y madera de estilo moderno",
+  },
+  {
+    src: "img/galeria/img18.jpg",
+    categoria: "muebles",
+    descripcion: "Juego de tres estantes de madera y metal escalonados",
+  },
+  {
+    src: "img/galeria/img19.jpg",
+    categoria: "muebles",
+    descripcion: "Mesa ratona de madera y metal geométrica",
+  },
+  {
+    src: "img/galeria/img20.jpg",
+    categoria: "muebles",
+    descripcion: "Soporte de plantas",
+  },
+  {
+    src: "img/galeria/img21.jpg",
+    categoria: "muebles",
+    descripcion: "Estante de madera y metal",
+  },
 ];
 
-app.get('/api/galeria', (req, res) => {
+app.get("/api/galeria", (req, res) => {
   res.json(imagenes);
 });
 
