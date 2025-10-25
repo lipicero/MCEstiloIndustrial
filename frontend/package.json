@@ -16,7 +16,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cross-env PORT=3000 NODE_OPTIONS=--no-deprecation react-scripts start",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation react-scripts start",
     "build": "react-scripts build"
   },
   "eslintConfig": {
