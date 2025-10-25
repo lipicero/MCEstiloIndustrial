@@ -66,7 +66,6 @@ app.post('/api/contact',
     try {
       // Enviar email
       await transporter.sendMail({
-        from: process.env.EMAIL_USER,
         to: process.env.EMAIL_TO,
                 subject: `Nuevo mensaje de contacto - MC Estilo Industrial`,
         html: `
