@@ -22,18 +22,19 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configurar Nodemailer
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // true para 465, false para otros puertos
+  requireTLS: true, // fuerza STARTTLS
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
-  // Agregar opciones para producción
-  secure: true, // Usa SSL
-  pool: true, // Reutiliza conexiones
-  maxConnections: 1, // Limita conexiones para evitar bloqueos
-  connectionTimeout: 10000, // 10 segundos para conectar
-  greetingTimeout: 10000, // 10 segundos para saludo
-  socketTimeout: 30000, // 30 segundos para socket
+  // Opciones de timeout ajustadas
+  connectionTimeout: 60000, // 60 segundos
+  greetingTimeout: 30000, // 30 segundos
+  socketTimeout: 60000, // 60 segundos
+  debug: true,
 });
 
 // Cache simple para evitar emails duplicados (últimos 30 segundos)
