@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
   : ["http://localhost:3000"];
+console.log("Allowed origins:", allowedOrigins);
 const corsOptions = {
   origin: allowedOrigins,
   credentials: true,
