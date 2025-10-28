@@ -2,8 +2,10 @@ require("dotenv").config({ silent: true });
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 const { body, validationResult } = require("express-validator");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,7 +14,6 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
   : ["http://localhost:3000"];
-console.log("Allowed origins:", allowedOrigins);
 const corsOptions = {
   origin: allowedOrigins,
   credentials: true,
@@ -20,15 +21,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Configurar Nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  }
-});
 
 // Cache simple para evitar emails duplicados (últimos 30 segundos)
 const sentEmails = new Map();
@@ -72,7 +64,7 @@ app.post(
     try {
       console.log("Intentando enviar email a:", process.env.EMAIL_TO);
       // Enviar email
-      const info = await transporter.sendMail({
+      const data = await resend.emails.send({
         from: process.env.EMAIL_USER,
         to: process.env.EMAIL_TO,
         subject: `Nuevo mensaje de contacto - MC Estilo Industrial`,
@@ -135,7 +127,7 @@ app.post(
         `,
       });
 
-      console.log("Email enviado exitosamente:", info.messageId);
+      console.log("Email enviado exitosamente:", data.id);
 
       // Agregar a cache
       sentEmails.set(key, now);
