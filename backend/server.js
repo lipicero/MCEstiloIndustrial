@@ -23,18 +23,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configurar Nodemailer
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, // true para 465
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  // Opciones de timeout ajustadas
-  connectionTimeout: 60000, // 60 segundos
-  greetingTimeout: 30000, // 30 segundos
-  socketTimeout: 60000, // 60 segundos
-  debug: true,
+    pass: process.env.EMAIL_PASS,
+  }
 });
 
 // Cache simple para evitar emails duplicados (últimos 30 segundos)
