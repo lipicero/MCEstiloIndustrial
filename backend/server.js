@@ -59,10 +59,10 @@ app.post(
         .json({ message: "Mensaje ya enviado recientemente" });
     }
 
-    console.log("Mensaje de contacto:", { name, email, message });
+    // console.log("Mensaje de contacto:", { name, email, message });
 
     try {
-      console.log("Intentando enviar email a:", process.env.EMAIL_TO);
+      // console.log("Intentando enviar email a:", process.env.EMAIL_TO);
       // Enviar email
       const data = await resend.emails.send({
         from: process.env.EMAIL_USER,
@@ -127,7 +127,7 @@ app.post(
         `,
       });
 
-      console.log("Email enviado exitosamente:", data.id);
+      // console.log("Email enviado exitosamente:", data.id);
 
       // Agregar a cache
       sentEmails.set(key, now);
