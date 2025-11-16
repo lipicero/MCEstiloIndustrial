@@ -47,7 +47,7 @@ const Header = () => {
     
     window.addEventListener('scroll', onScroll, { passive: true });
     
-    // Fade-in al hacer scroll
+    // Animacion Fade-in al hacer scroll
     var elementos = document.querySelectorAll(".fade-in");
     var observer = new IntersectionObserver(
       function (entries, obs) {

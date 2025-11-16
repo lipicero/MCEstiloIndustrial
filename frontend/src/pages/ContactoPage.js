@@ -1,9 +1,11 @@
 import "../App.css";
 import "../styles/components/pages/ContactoPage.css";
-import { useEffect } from "react";
+import { useEffect, useRef } from 'react';
 import SEO from '../components/SEO';
 
 const ContactoPage = () => {
+  const listenerAdded = useRef(false);
+
   useEffect(() => {
     // 2. Fade-in al hacer scroll
     var elementos = document.querySelectorAll(".fade-in");
@@ -62,22 +64,32 @@ const ContactoPage = () => {
     const spinner = document.getElementById("form-spinner");
     const feedback = document.getElementById("form-feedback");
 
-    if (!form || !spinner || !feedback) return;
+    if (!form || !spinner || !feedback || listenerAdded.current) return;
 
+    listenerAdded.current = true;
+
+    let isSubmitting = false;
 
     const handleSubmit = (e) => {
       e.preventDefault();
+      if (isSubmitting) return;
+      isSubmitting = true;
+
+      const submitBtn = form.querySelector("button[type=submit]");
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+
       feedback.textContent = "";
       feedback.className = "form-feedback";
 
       if (!form.checkValidity()) {
         feedback.textContent = "Completa todos los campos obligatorios.";
-        feedback.classList.add("error");
+        feedback.className = "form-feedback error show";
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+        isSubmitting = false;
         return;
       }
-
-      spinner.hidden = false;
-      form.querySelector("button[type=submit]").disabled = true;
 
       fetch(form.action, {
         method: "POST",
@@ -86,26 +98,39 @@ const ContactoPage = () => {
       })
         .then((res) => {
           if (!res.ok) {
+            if (res.status === 429) {
+              throw new Error('Ya enviaste un mensaje recientemente. Espera unos segundos.');
+            }
             return res.json().then((json) => {
-              throw new Error(json.error || "Error al enviar");
+              if (json.errors) {
+                throw new Error(json.errors.map(err => err.msg).join(', '));
+              }
+              throw new Error(json.message || "Error al enviar");
             });
           }
           feedback.textContent = "¡Mensaje enviado con éxito!";
-          feedback.classList.add("success");
+          feedback.className = "form-feedback success show";
           form.reset();
           // Ocultar mensaje de éxito después de 3 segundos
           setTimeout(() => {
             feedback.textContent = "";
             feedback.className = "form-feedback";
           }, 3000);
+          
+          // Habilitar botón inmediatamente
+          const submitBtn = form.querySelector("button[type=submit]");
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('loading');
         })
-        .catch(() => {
-          feedback.textContent = "Hubo un problema. Intenta más tarde.";
-          feedback.classList.add("error");
+        .catch((error) => {
+          feedback.textContent = error.message || "Hubo un problema. Intenta más tarde.";
+          feedback.className = "form-feedback error show";
         })
         .finally(() => {
-          spinner.hidden = true;
-          form.querySelector("button[type=submit]").disabled = false;
+          const submitBtn = form.querySelector("button[type=submit]");
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('loading');
+          isSubmitting = false;
         });
     };
 
@@ -132,7 +157,7 @@ const ContactoPage = () => {
         <form
           id="contact-form"
           className="formulario"
-          action="https://formspree.io/f/xanogqro"
+          action={`${process.env.REACT_APP_API_URL}/api/contact`}
           method="POST"
         >
           <div className="form-group">
@@ -185,9 +210,9 @@ const ContactoPage = () => {
           <input type="hidden" name="_language" value="es" />
           <div className="form-group submit-group">
             <button type="submit" className="btn-enviar">
-              Enviar mensaje
+              <span className="btn-text">Enviar mensaje</span>
+              <div id="form-spinner" className="spinner"></div>
             </button>
-            <div id="form-spinner" className="spinner" hidden></div>
           </div>
           <div id="form-feedback" className="form-feedback"></div>
         </form>

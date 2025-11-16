@@ -6,31 +6,25 @@ import SEO from '../components/SEO';
 const GaleriaPage = (props) => {
   const [filtroActivo, setFiltroActivo] = useState('todos');
   const [animKey, setAnimKey] = useState(0);
+  const [imagenes, setImagenes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Datos de las imágenes con categorías y descripciones
-  const imagenes = [
-    { src: "img/galeria/img1.webp", categoria: "estructuras", descripcion: "Posa Botella" },
-    { src: "img/galeria/img2.webp", categoria: "rejas", descripcion: "Rejas metálicas negras, funcionales" },
-    { src: "img/galeria/img3.webp", categoria: "estructuras", descripcion: "Perchero 50x22cm" },
-    { src: "img/galeria/img4.webp", categoria: "muebles", descripcion: "Mostrador de hierro y madera" },
-    { src: "img/galeria/img5.webp", categoria: "estructuras", descripcion: "Puerta corrediza rústica doble" },
-    { src: "img/galeria/img6.jpg", categoria: "estructuras", descripcion: "Puerta corredera rústica quemada" },
-    { src: "img/galeria/img7.webp", categoria: "muebles", descripcion: "Consola estrecha madera y metal" },
-    { src: "img/galeria/img8.webp", categoria: "estructuras", descripcion: "Estufa empotrada con reja" },
-    { src: "img/galeria/img9.webp", categoria: "muebles", descripcion: "Escritorio modular madera y metal" },
-    { src: "img/galeria/img10.webp", categoria: "muebles", descripcion: "Estantería modular madera y estructura metálica" },
-    { src: "img/galeria/img11.webp", categoria: "rejas", descripcion: "Porche cerrado con malla metálica" },
-    { src: "img/galeria/img12.webp", categoria: "muebles", descripcion: "Mesa auxiliar hierro y madera" },
-    { src: "img/galeria/img13.webp", categoria: "portones", descripcion: "Portón doble hoja, caño estructural y malla" },
-    { src: "img/galeria/img14.jpg", categoria: "muebles", descripcion: "Estante de madera y metal elegante" },
-    { src: "img/galeria/img15.jpg", categoria: "muebles", descripcion: "Estante de exhibición de madera y metal grande" },
-    { src: "img/galeria/img16.jpg", categoria: "muebles", descripcion: "Rack TV estilo industrial moderno" },
-    { src: "img/galeria/img17.jpg", categoria: "estructuras", descripcion: "Escalera de metal y madera de estilo moderno" },
-    { src: "img/galeria/img18.jpg", categoria: "muebles", descripcion: "Juego de tres estantes de madera y metal escalonados" },
-    { src: "img/galeria/img19.jpg", categoria: "muebles", descripcion: "Mesa ratona de madera y metal geométrica" },
-    { src: "img/galeria/img20.jpg", categoria: "muebles", descripcion: "Soporte de plantas" },
-    { src: "img/galeria/img21.jpg", categoria: "muebles", descripcion: "Estante de madera y metal" },
-  ];
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/galeria`)
+      .then(res => {
+        if (!res.ok) throw new Error('Error al cargar imágenes');
+        return res.json();
+      })
+      .then(data => {
+        setImagenes(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const imagenesFiltradas = filtroActivo === 'todos' 
     ? imagenes 
@@ -222,21 +216,25 @@ const GaleriaPage = (props) => {
         </section>
 
         {/* Galería con descripciones */}
-        <div className="galeria" key={animKey}>
-          {imagenesFiltradas.map((img, index) => (
-            <div key={index} className="galeria-item">
-              <img 
-                src={img.src} 
-                loading="lazy" 
-                alt={img.descripcion}
-                data-categoria={img.categoria}
-              />
-              <div className="galeria-descripcion">
-                <p>{img.descripcion}</p>
+        {loading && <p className="loading">Cargando imágenes...</p>}
+        {error && <p className="error">Error al cargar imágenes: {error}</p>}
+        {!loading && !error && (
+          <div className="galeria" key={animKey}>
+            {imagenesFiltradas.map((img, index) => (
+              <div key={index} className="galeria-item">
+                <img 
+                  src={img.src} 
+                  loading="lazy" 
+                  alt={img.descripcion}
+                  data-categoria={img.categoria}
+                />
+                <div className="galeria-descripcion">
+                  <p>{img.descripcion}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
     </>
   )

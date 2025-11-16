@@ -126,6 +126,29 @@
   box-shadow: 0 3px 8px #2c2c2c19;
   transition: background 0.22s, transform 0.18s, box-shadow 0.21s;
   margin-top: 0.3em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  width: 100%;
+}
+
+.btn-enviar .btn-text {
+  display: inline;
+}
+
+.btn-enviar .spinner {
+  display: none;
+  margin-left: 8px;
+}
+
+.btn-enviar.loading .btn-text {
+  display: none;
+}
+
+.btn-enviar.loading .spinner {
+  display: inline-block;
 }
 
 .btn-enviar:hover,
@@ -134,6 +157,23 @@
   background: linear-gradient(90deg, #8a633f 70%, #2c2c2c 120%);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 18px #a67c5225;
+}
+
+.formulario button[type="submit"]:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none;
+}
+
+.formulario button[type="submit"].loading {
+  background: linear-gradient(90deg, #a67c52 60%, #4a4a4a 120%);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
 .form-feedback.success {
@@ -223,6 +263,12 @@
   border-top-color: var(--wood-accent);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
+  display: none;
+  margin-left: 10px;
+}
+
+.spinner.show {
+  display: inline-block;
 }
 
 /* Animación del spinner */
@@ -232,9 +278,28 @@
   }
 }
 
-.form-feedback {
-  margin-top: 1rem;
-  font-size: 0.9rem;
+.form-group.submit-group {
+  display: block;
+}
+
+.form-feedback.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-feedback.error {
+  color: #c82727;
+  animation: shake 0.5s ease-in-out;
+}
+
+.form-feedback.success {
+  color: #1c851c;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
 
 

@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",
+    "@vercel/analytics": "^1.5.0",
     "axios": "^1.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -15,7 +16,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation react-scripts start",
     "build": "react-scripts build"
   },
   "eslintConfig": {
@@ -35,5 +36,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
   }
 }
