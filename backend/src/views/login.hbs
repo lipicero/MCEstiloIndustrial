@@ -1,0 +1,53 @@
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center"
+  style=" background: var(--bg-primary);">
+  <div class="row w-100 justify-content-center">
+    <div class="col-md-6 col-lg-5 col-xl-4">
+      <div class="card shadow-lg border-0">
+        <div class="card-body p-5">
+          <div class="text-center mb-4">
+            <div class="mb-3"
+              style="display: inline-block; padding: 1rem; background: linear-gradient(135deg, var(--accent-steel), var(--charcoal)); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+              <img src="/img/logo.png" alt="logo mcestilo industrial" style="max-width: 80px; max-height: 80px;" />
+            </div>
+            <h2 class="card-title font-weight-bold mt-3 mb-2"
+              style="color: var(--text-primary); font-weight: 700; letter-spacing: 1px;">
+              MC ESTILO INDUSTRIAL
+            </h2>
+            <p style="color: var(--text-muted); font-weight: 500; font-size: 0.95rem;">Panel de Administración</p>
+          </div>
+
+          <form action="/login" method="post">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="inputUser" name="usuario" placeholder="Usuario" required
+                autofocus />
+              <label for="inputUser"><i class="fas fa-user me-2"></i>Usuario</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Contraseña"
+                required />
+              <label for="inputPassword"><i class="fas fa-lock me-2"></i>Contraseña</label>
+            </div>
+
+            {{#if error}}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <div>{{message}}</div>
+            </div>
+            {{/if}}
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-4 pt-3" style="border-top: 1px solid var(--border-color);">
+            <small style="color: var(--text-muted);">© 2025 MC Estilo Industrial</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

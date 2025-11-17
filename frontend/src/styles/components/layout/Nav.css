@@ -296,6 +296,52 @@ nav.nav-sticky-top {
   background: var(--accent-rust);
 }
 
+/* User Section */
+.user-section {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--wood-accent);
+  color: var(--text-light);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  border: 1px solid var(--text-light);
+}
+
+.user-link:hover {
+  background-color: var(--slate);
+  transform: scale(1.1);
+}
+
+.user-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.dark-theme .user-link {
+  background-color: var(--accent-rust);
+  color: var(--text-primary);
+  border-color: var(--accent-wood);
+}
+
+.dark-theme .user-link:hover {
+  background-color: var(--accent-fire);
+}
+
+.dark-theme .user-link svg {
+  stroke: var(--charcoal);
+  fill: none;
+}
+
 /* Navegación de escritorio: menú siempre visible y centrado */
 @media (min-width: 769px) {
   .nav-toggle {
@@ -424,6 +470,14 @@ nav.nav-sticky-top {
 
   .nav-menu li a::after {
     display: none;
+  }
+
+  .user-section {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
   }
 }
 

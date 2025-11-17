@@ -13,7 +13,11 @@ const GaleriaPage = (props) => {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/galeria`)
       .then(res => {
-        if (!res.ok) throw new Error('Error al cargar imágenes');
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+        const contentType = res.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('La respuesta no es JSON válido');
+        }
         return res.json();
       })
       .then(data => {
@@ -27,8 +31,8 @@ const GaleriaPage = (props) => {
   }, []);
 
   const imagenesFiltradas = filtroActivo === 'todos' 
-    ? imagenes 
-    : imagenes.filter(img => img.categoria === filtroActivo);
+    ? imagenes.filter(img => img.src && img.src.trim() !== '') 
+    : imagenes.filter(img => img.src && img.src.trim() !== '' && img.categoria === filtroActivo);
 
   const cambiarFiltro = (nuevoFiltro) => {
     setFiltroActivo(nuevoFiltro);
@@ -216,23 +220,57 @@ const GaleriaPage = (props) => {
         </section>
 
         {/* Galería con descripciones */}
-        {loading && <p className="loading">Cargando imágenes...</p>}
-        {error && <p className="error">Error al cargar imágenes: {error}</p>}
+        {loading && (
+          <div className="loading" style={{ 
+            textAlign: 'center', 
+            padding: '3rem', 
+            color: 'var(--text-muted)',
+            fontSize: '1.1rem'
+          }}>
+            Cargando imágenes...
+          </div>
+        )}
+        {error && (
+          <div className="error" style={{ 
+            textAlign: 'center', 
+            padding: '2rem', 
+            color: 'var(--btn-danger-bg)',
+            fontSize: '1rem',
+            backgroundColor: 'var(--bg-secondary)',
+            borderRadius: '8px',
+            margin: '2rem auto',
+            maxWidth: '600px'
+          }}>
+            Error al cargar imágenes: {error}
+          </div>
+        )}
         {!loading && !error && (
           <div className="galeria" key={animKey}>
-            {imagenesFiltradas.map((img, index) => (
-              <div key={index} className="galeria-item">
-                <img 
-                  src={img.src} 
-                  loading="lazy" 
-                  alt={img.descripcion}
-                  data-categoria={img.categoria}
-                />
-                <div className="galeria-descripcion">
-                  <p>{img.descripcion}</p>
+            {imagenesFiltradas.length > 0 ? (
+              imagenesFiltradas.map((img, index) => (
+                <div key={index} className="galeria-item">
+                  <img 
+                    src={img.src} 
+                    loading="lazy" 
+                    alt={img.descripcion}
+                    data-categoria={img.categoria}
+                  />
+                  <div className="galeria-descripcion">
+                    <p>{img.descripcion}</p>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div style={{ 
+                textAlign: 'center', 
+                padding: '3rem', 
+                color: 'var(--text-muted)',
+                fontSize: '1rem',
+                gridColumn: '1 / -1'
+              }}>
+                No hay imágenes en esta categoría
               </div>
-            ))}
+            )}
           </div>
         )}
       </main>

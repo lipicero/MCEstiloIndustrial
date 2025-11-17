@@ -1,9 +1,30 @@
 import '../styles/components/pages/HomePage.css';
 import '../App.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SEO from '../components/SEO';
 
 const HomePage = (props) => {
+  const [sliderImages, setSliderImages] = useState([]);
+
+  useEffect(() => {
+    // Cargar las primeras 3 imágenes de la API para el slider
+    fetch(`${process.env.REACT_APP_API_URL}/api/galeria`)
+      .then(res => res.json())
+      .then(data => {
+        // Filtrar solo imágenes con src válido
+        const imagenesValidas = data.filter(img => img.src && img.src.trim() !== '');
+        
+        // Mezclar aleatoriamente y tomar 3
+        const imagenesAleatorias = imagenesValidas
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        
+        setSliderImages(imagenesAleatorias);
+      })
+      .catch(err => {
+        console.error('Error al cargar imágenes del slider:', err);
+      });
+  }, []);
 
   useEffect(() => {
     // --- Fade-in al hacer scroll ---
@@ -50,6 +71,17 @@ const HomePage = (props) => {
 
     elementos.forEach(el => observer.observe(el));
 
+    // Cleanup
+    return () => {
+      checkInitialVisibility.disconnect();
+      observer.disconnect();
+    };
+  }, []);
+
+  // useEffect separado para el slider que depende de sliderImages
+  useEffect(() => {
+    if (sliderImages.length === 0) return;
+
     // --- Slider de galería ---
     const slider = document.getElementById('galeria-slider');
     if (!slider) return;
@@ -60,7 +92,8 @@ const HomePage = (props) => {
     const next = slider.querySelector('.slider-btn.next');
     const dots = document.getElementById('slider-dots');
     let index = 0;
-dots.innerHTML = '';
+
+    dots.innerHTML = '';
     imgs.forEach((_, i) => {
       const dot = document.createElement('button');
       dot.type = 'button';
@@ -93,23 +126,29 @@ dots.innerHTML = '';
       actualizarSlider();
     };
 
-    prev.addEventListener('click', () => irA(index - 1));
-    next.addEventListener('click', () => irA(index + 1));
+    const handlePrev = () => irA(index - 1);
+    const handleNext = () => irA(index + 1);
+
+    prev.addEventListener('click', handlePrev);
+    next.addEventListener('click', handleNext);
 
     // Swipe en móviles
     let startX = 0;
-    track.addEventListener('touchstart', (e) => {
+    const handleTouchStart = (e) => {
       startX = e.touches[0].clientX;
-    });
-    track.addEventListener('touchend', (e) => {
+    };
+    const handleTouchEnd = (e) => {
       const dx = e.changedTouches[0].clientX - startX;
       if (dx > 40) irA(index - 1);
       if (dx < -40) irA(index + 1);
-    });
+    };
+
+    track.addEventListener('touchstart', handleTouchStart);
+    track.addEventListener('touchend', handleTouchEnd);
 
     actualizarSlider();
 
-    // Animación “tap” en botones móviles
+    // Animación "tap" en botones móviles
     const sliderBtns = document.querySelectorAll('.slider-btn');
     sliderBtns.forEach((b) => {
       b.addEventListener('pointerdown', () => {
@@ -119,15 +158,17 @@ dots.innerHTML = '';
           b.classList.add('animate-tap');
         }
       });
-      b.addEventListener('animationend', () => {
-        b.classList.remove('animate-tap');
-      });
-      b.addEventListener('mouseup', () => {
-        if (window.innerWidth >= 769) b.blur();
-      });
     });
 
-  }, []);
+        // Cleanup del slider
+    return () => {
+      prev.removeEventListener('click', handlePrev);
+      next.removeEventListener('click', handleNext);
+      track.removeEventListener('touchstart', handleTouchStart);
+      track.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [sliderImages]);
+
   return (
     <>
       <SEO 
@@ -170,30 +211,43 @@ dots.innerHTML = '';
       </section>
       {/* <-- Slider imagenes --> */}
       <section className="slider-holder fade-in">
-        <div className="slider" id="galeria-slider">
-          <button className="slider-btn prev" aria-label="Anterior">
-            <span className="slider-btn-inner">
-              <svg width="20" height="20" viewBox="0 0 24 24" style={{ display: 'block' }} fill="none" stroke="currentColor"
-                strokeWidth="2">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </span>
-          </button>
-          <div className="slider-track">
-            <img src="img/galeria/img1.webp" alt="Mueble de hierro y madera" />
-            <img src="img/galeria/img2.webp" alt="Portón moderno a medida" />
-            <img src="img/galeria/img3.webp" alt="Estantería industrial" />
+        {sliderImages.length > 0 ? (
+          <>
+            <div className="slider" id="galeria-slider">
+              <button className="slider-btn prev" aria-label="Anterior">
+                <span className="slider-btn-inner">
+                  <svg width="20" height="20" viewBox="0 0 24 24" style={{ display: 'block' }} fill="none" stroke="currentColor"
+                    strokeWidth="2">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </span>
+              </button>
+              <div className="slider-track">
+                {sliderImages.map((img, index) => (
+                  <img key={index} src={img.src} alt={img.descripcion} loading="lazy" />
+                ))}
+              </div>
+              <button className="slider-btn next" aria-label="Siguiente">
+                <span className="slider-btn-inner">
+                  <svg width="20" height="20" viewBox="0 0 24 24" style={{ display: 'block' }} fill="none" stroke="currentColor"
+                    strokeWidth="2">
+                    <polyline points="9 6 15 12 9 18" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div className="slider-dots" id="slider-dots"></div>
+          </>
+        ) : (
+          <div className="slider-loading" style={{ 
+            textAlign: 'center', 
+            padding: '3rem', 
+            color: 'var(--text-muted)',
+            fontSize: '1.1rem'
+          }}>
+            Cargando imágenes...
           </div>
-          <button className="slider-btn next" aria-label="Siguiente">
-            <span className="slider-btn-inner">
-              <svg width="20" height="20" viewBox="0 0 24 24" style={{ display: 'block' }} fill="none" stroke="currentColor"
-                strokeWidth="2">
-                <polyline points="9 6 15 12 9 18" />
-              </svg>
-            </span>
-          </button>
-        </div>
-        <div className="slider-dots" id="slider-dots"></div>
+        )}
       </section>
     </main>
     </>
