@@ -106,7 +106,7 @@ const Nav = (props) => {
                 </ul>
                 <div className="user-section">
                     <a
-  href={`${process.env.REACT_APP_API_URL}/api/galeria`}
+  href={`${process.env.REACT_APP_API_URL}/login`}
   className="user-link"
   aria-label="Iniciar sesión"
 >
