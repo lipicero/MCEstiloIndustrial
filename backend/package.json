@@ -4,7 +4,9 @@
   "description": "Backend para MCEstiloIndustrial",
   "scripts": {
     "start": "node ./src/bin/www",
-    "dev": "nodemon ./src/bin/www"
+    "dev": "nodemon ./src/bin/www",
+    "keepalive": "node ./keepalive.js",
+    "keepalive:loop": "node ./keepalive.js --loop --interval=300000"
   },
   "dependencies": {
     "cloudinary": "^2.8.0",

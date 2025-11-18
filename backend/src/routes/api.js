@@ -40,6 +40,16 @@ router.get('/galeria', async function (req, res, next) {
     }
 });
 
+// Health / ping endpoint (useful for keep-alive pings from a cron or external monitor)
+router.get('/ping', function (req, res) {
+    try {
+        res.status(200).json({ status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() });
+    } catch (error) {
+        console.error('Error GET /api/ping:', error);
+        res.status(500).json({ error: true, message: 'Internal error' });
+    }
+});
+
 router.post('/contacto', async (req, res) => {
     try {
         const { name, email, message, phone, _language } = req.body;

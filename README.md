@@ -159,6 +159,18 @@ npm run build
 
 La carpeta `build` contendrá los archivos optimizados listos para producción.
 
+### Keep-alive / evitar que Render duerma
+
+Se añadió un endpoint de estado (`/api/ping`) en el backend y un script `keepalive.js` en la carpeta `backend` para hacer peticiones HTTP de prueba. Para evitar que Render (o servicios similares) ponga la aplicación en estado inactivo, puedes configurar cualquiera de las siguientes opciones:
+
+- **Render Cron (recomendado):** Agrega un Cron Job en la dashboard de Render que ejecute `npm run keepalive:loop` en el servicio backend cada 5-10 minutos. Asegúrate de configurar `KEEP_ALIVE_URL` como la URL completa del backend en producción (por ejemplo `https://tu-app.onrender.com/api/ping`).
+- **Servicio externo de ping:** Usa Uptime Robot, cron-job.org u otro servicio que haga peticiones a `https://tu-app.onrender.com/api/ping` cada X minutos.
+- **Ejecutarlo manualmente como script:** Ejecuta `npm run keepalive` en la carpeta `backend` para hacer una petición única.
+
+**Nota:** El servidor backend por defecto escucha en el puerto `3001` (revisa `backend/src/bin/www`). Si ejecutas `npm start` en local sin pasar `PORT`, la URL por defecto del ping será `http://localhost:3001/api/ping`. Si usas el puerto `3000` para el frontend o cualquier otro proceso, asegúrate de que `KEEP_ALIVE_URL` apunte al puerto correcto.
+
+Si usas Render Cron, configúralo para ejecutar `npm run keepalive:loop` y establece la variable de entorno `KEEP_ALIVE_URL` con la URL del endpoint.
+
 ## 🤝 Contribuciones
 
 Este es un proyecto privado para MC Estilo Industrial. Para sugerencias o mejoras, contacta al equipo de desarrollo.
