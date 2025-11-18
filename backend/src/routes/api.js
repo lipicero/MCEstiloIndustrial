@@ -13,11 +13,7 @@ router.get('/galeria', async function (req, res, next) {
         const baseUrl = req.protocol + '://' + req.get('host');
         galeria = galeria.map(item => {
             if (item.img_id && typeof item.img_id === 'string' && item.img_id.trim() !== '') {
-                const imagen = cloudinary.url(item.img_id, {
-                    width: 960,
-                    height: 200,
-                    crop: 'fill'
-                });
+                const imagen = cloudinary.url(item.img_id);
                 return {
                     ...item,
                     src: imagen
