@@ -157,7 +157,7 @@ const ContactoPage = () => {
         <form
           id="contact-form"
           className="formulario"
-          action={`${process.env.REACT_APP_API_URL}/api/contact`}
+          action={`${process.env.REACT_APP_API_URL}/api/contacto`}
           method="POST"
         >
           <div className="form-group">
