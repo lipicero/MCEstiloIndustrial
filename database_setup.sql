@@ -23,18 +23,18 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usuario` (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `users`
--- Contraseña por defecto para 'admin' es 'admin' (hasheada con MD5)
+-- Contraseña por defecto para 'admin' es 'admin' (hasheada con bcrypt)
 --
 
 INSERT INTO `users` (`id`, `usuario`, `password`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3');
+(1, 'admin', '$2b$10$Fs.A3uVrpNaSNx86s2d7a.VlbRBYDZKjKvDMHJdEn.WkideL0pWqK');
 
 -- --------------------------------------------------------
 
