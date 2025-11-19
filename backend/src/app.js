@@ -61,7 +61,7 @@ var sessionStoreOptions = {
 var sessionStore = new MySQLStore(sessionStoreOptions);
 // session middleware
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'mi-secreto-local',
+  secret: process.env.SESSION_SECRET,
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
@@ -71,6 +71,7 @@ app.use(session({
 // make session available in views (optional but helpful)
 app.use(function (req, res, next) {
   res.locals.session = req.session;
+  res.locals.env = process.env;
   next();
 });
 // Servir archivos estáticos desde la carpeta public en la raíz del backend
