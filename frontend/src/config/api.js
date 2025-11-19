@@ -14,10 +14,10 @@ const getApiUrl = () => {
   }
 
   // 3. Fallback para producción y red local (IP dinámica):
-  // Asume que el backend está en el mismo host, puerto 3001 (o se puede ajustar si es necesario)
+  // Asume que el backend está en el mismo host, puerto 3001 en desarrollo, 443 en producción (HTTPS).
   // Si el backend está en el mismo dominio/puerto (proxy), se podría devolver solo '/api' o similar.
-  // Por ahora, mantenemos la lógica de puerto 3001 pero con el hostname correcto.
-  return `${protocol}//${hostname}:3001`;
+  // Por ahora, mantenemos la lógica de puerto dinámico.
+  return `${protocol}//${hostname}${protocol === 'https' ? '' : ':3001'}`;
 };
 
 export const API_URL = getApiUrl();

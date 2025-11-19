@@ -81,11 +81,9 @@ app.use(function (req, res, next) {
   if (currentHost.includes('localhost') || currentHost.includes('127.0.0.1')) {
     res.locals.websiteUrl = 'http://localhost:3000';
   } else {
-    // Para cualquier otra IP (red local o prod), asumir que el frontend está en el puerto 3000 del mismo host
-    // Nota: req.get('host') incluye el puerto si es distinto de 80/443.
-    // Aquí queremos la IP base.
+    // Para producción, usar HTTPS en el mismo host (puerto 443 por defecto)
     const hostBase = currentHost.split(':')[0];
-    res.locals.websiteUrl = `http://${hostBase}:3000`;
+    res.locals.websiteUrl = `https://${hostBase}`;
   }
   
   next();
