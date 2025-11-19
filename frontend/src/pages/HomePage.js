@@ -2,13 +2,14 @@ import '../styles/components/pages/HomePage.css';
 import '../App.css';
 import { useEffect, useState } from 'react';
 import SEO from '../components/SEO';
+import { API_URL } from '../config/api';
 
 const HomePage = (props) => {
   const [sliderImages, setSliderImages] = useState([]);
 
   useEffect(() => {
     // Cargar las primeras 3 imágenes de la API para el slider
-    fetch(`${process.env.REACT_APP_API_URL}/api/galeria`)
+    fetch(`${API_URL}/api/galeria`)
       .then(res => res.json())
       .then(data => {
         // Filtrar solo imágenes con src válido

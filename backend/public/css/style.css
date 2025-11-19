@@ -374,7 +374,6 @@ h4 {
 
 /* Tema toggle button */
 #theme-toggle {
-  /* margin-bottom: 10px; */
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -438,9 +437,49 @@ h4 {
     width: 60px;
     height: 60px;
   }
-  #theme-toggle {
-    margin-bottom: 10px !important;
+  
+  /* Ajustes para navbar en móviles */
+  .navbar-nav {
+    align-items: center !important;
   }
+  
+  .navbar-nav .nav-item {
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Ocultar solo el saludo del usuario en móviles */
+  .navbar .user-name {
+    display: none !important;
+  }
+  
+  /* Forzar mostrar el texto "Sitio Web" en móviles */
+  .navbar .nav-link .d-none.d-md-inline {
+    display: inline !important;
+  }
+  
+  /* Ajustar el contenedor del usuario */
+  .navbar-nav .nav-item.d-flex {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  #theme-toggle {
+    margin-right: 0 !important;
+    margin-bottom: 0;
+  }
+  
+  .navbar .nav-link {
+    padding: 0.5rem 0.75rem !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .navbar .nav-link i {
+    margin-right: 0.5rem;
+  }
+
 }
 
 /* Estilos específicos para el backend */

@@ -72,6 +72,22 @@ app.use(session({
 app.use(function (req, res, next) {
   res.locals.session = req.session;
   res.locals.env = process.env;
+  
+  // Detectar el host actual y configurar la URL del frontend correspondiente
+  const currentHost = req.get('host');
+  const protocol = req.protocol;
+  
+  // Si es localhost, usar localhost:3000
+  if (currentHost.includes('localhost') || currentHost.includes('127.0.0.1')) {
+    res.locals.websiteUrl = 'http://localhost:3000';
+  } else {
+    // Para cualquier otra IP (red local o prod), asumir que el frontend está en el puerto 3000 del mismo host
+    // Nota: req.get('host') incluye el puerto si es distinto de 80/443.
+    // Aquí queremos la IP base.
+    const hostBase = currentHost.split(':')[0];
+    res.locals.websiteUrl = `http://${hostBase}:3000`;
+  }
+  
   next();
 });
 // Servir archivos estáticos desde la carpeta public en la raíz del backend
@@ -94,7 +110,8 @@ const secured = async function (req, res, next) {
 };
 
 
-app.use('/api', cors(), apiRouter);
+app.use(cors());
+app.use('/api', apiRouter);
 app.use('/login', login);
 app.use('/galeria', secured, galeria);
 app.get('/', function(req, res) {
