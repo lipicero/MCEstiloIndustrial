@@ -8,17 +8,12 @@ const getApiUrl = () => {
   const hostname = window.location.hostname;
   const protocol = window.location.protocol;
 
-  // 2. Desarrollo en red local (IP específica)
-  if (hostname === '192.168.1.94') {
-    return 'http://192.168.1.94:3001';
-  }
-
-  // 3. Desarrollo local estándar
+  // 2. Desarrollo local estándar
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     return 'http://localhost:3001';
   }
 
-  // 4. Fallback para producción u otros entornos:
+  // 3. Fallback para producción y red local (IP dinámica):
   // Asume que el backend está en el mismo host, puerto 3001 (o se puede ajustar si es necesario)
   // Si el backend está en el mismo dominio/puerto (proxy), se podría devolver solo '/api' o similar.
   // Por ahora, mantenemos la lógica de puerto 3001 pero con el hostname correcto.

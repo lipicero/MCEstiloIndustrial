@@ -2,6 +2,7 @@ import "../App.css";
 import "../styles/components/pages/ContactoPage.css";
 import { useEffect, useRef } from 'react';
 import SEO from '../components/SEO';
+import { API_URL } from '../config/api';
 
 const ContactoPage = () => {
   const listenerAdded = useRef(false);
@@ -157,7 +158,7 @@ const ContactoPage = () => {
         <form
           id="contact-form"
           className="formulario"
-          action={`${process.env.REACT_APP_API_URL}/api/contacto`}
+          action={`${API_URL}/api/contacto`}
           method="POST"
         >
           <div className="form-group">
