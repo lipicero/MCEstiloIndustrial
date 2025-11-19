@@ -374,6 +374,7 @@ h4 {
 
 /* Tema toggle button */
 #theme-toggle {
+  margin-bottom: 10px;
   width: 34px;
   height: 34px;
   border-radius: 50%;
