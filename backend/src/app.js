@@ -73,18 +73,8 @@ app.use(function (req, res, next) {
   res.locals.session = req.session;
   res.locals.env = process.env;
   
-  // Detectar el host actual y configurar la URL del frontend correspondiente
-  const currentHost = req.get('host');
-  const protocol = req.protocol;
-  
-  // Si es localhost, usar localhost:3000
-  if (currentHost.includes('localhost') || currentHost.includes('127.0.0.1')) {
-    res.locals.websiteUrl = 'http://localhost:3000';
-  } else {
-    // Para producción, usar HTTPS en el mismo host (puerto 443 por defecto)
-    const hostBase = currentHost.split(':')[0];
-    res.locals.websiteUrl = `https://${hostBase}`;
-  }
+  // Configurar la URL del frontend
+  res.locals.websiteUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
   
   next();
 });
