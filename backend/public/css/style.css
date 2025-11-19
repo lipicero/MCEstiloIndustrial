@@ -374,7 +374,7 @@ h4 {
 
 /* Tema toggle button */
 #theme-toggle {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -437,6 +437,9 @@ h4 {
   .admin-imagen {
     width: 60px;
     height: 60px;
+  }
+  #theme-toggle {
+    margin-bottom: 10px !important;
   }
 }
 
