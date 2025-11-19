@@ -2,6 +2,7 @@ import '../styles/components/pages/GaleriaPage.css';
 import '../App.css';
 import { useEffect, useState } from 'react';
 import SEO from '../components/SEO';
+import { API_URL } from '../config/api';
 
 const GaleriaPage = (props) => {
   const [filtroActivo, setFiltroActivo] = useState('todos');
@@ -11,7 +12,7 @@ const GaleriaPage = (props) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/galeria`)
+    fetch(`${API_URL}/api/galeria`)
       .then(res => {
         if (!res.ok) throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
         const contentType = res.headers.get('content-type');

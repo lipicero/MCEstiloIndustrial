@@ -72,6 +72,15 @@ app.use(session({
 app.use(function (req, res, next) {
   res.locals.session = req.session;
   res.locals.env = process.env;
+  
+  // Detectar el host actual y configurar la URL del frontend correspondiente
+  const currentHost = req.get('host');
+  if (currentHost && currentHost.includes('192.168.1.94')) {
+    res.locals.websiteUrl = 'http://192.168.1.94:3000';
+  } else {
+    res.locals.websiteUrl = 'http://localhost:3000';
+  }
+  
   next();
 });
 // Servir archivos estáticos desde la carpeta public en la raíz del backend

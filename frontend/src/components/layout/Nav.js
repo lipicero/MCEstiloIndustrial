@@ -2,6 +2,7 @@ import '../../styles/components/layout/Nav.css'
 import { NavLink } from "react-router-dom";
 import { useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { API_URL } from '../../config/api';
 
 const Nav = (props) => {
     useEffect(() => {
@@ -105,7 +106,7 @@ const Nav = (props) => {
                     <li><NavLink to="/contacto">Contacto</NavLink></li>
                     <div className="user-section" aria-label='Iniciar Sesión'>
                         <a
-                            href={`${process.env.REACT_APP_API_URL}/login`}
+                            href={`${API_URL}/login`}
                             className="user-link"
                             aria-label="Iniciar sesión"
                         >
