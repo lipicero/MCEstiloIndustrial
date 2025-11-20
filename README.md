@@ -2,35 +2,35 @@
 
 Sitio web corporativo para MC Estilo Industrial - Empresa dedicada a la fabricación de muebles y estructuras en hierro y madera con estilo industrial único.
 
-![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat&logo=react)
-![CSS3](https://img.shields.io/badge/CSS3-Responsive-1572B6?style=flat&logo=css3)
-![Status](https://img.shields.io/badge/Status-Active-success)
+![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat&logo=react) ![CSS3](https://img.shields.io/badge/CSS3-Responsive-1572B6?style=flat&logo=css3) ![Status](https://img.shields.io/badge/Status-Active-success)
 
 ## 📋 Descripción
 
-Sitio web moderno y responsive desarrollado con React que presenta los servicios, galería de proyectos y canales de contacto de MC Estilo Industrial. La empresa se especializa en:
+Sitio web moderno y responsive desarrollado principalmente con React que presenta los servicios, galería de proyectos y canales de contacto de MC Estilo Industrial. La empresa se especializa en:
 
 - 🪑 Muebles de hierro y madera
 - 🚪 Portones personalizados
 - 🛡️ Rejas de seguridad
 - 🏗️ Estructuras metálicas
 
+Nota: el repositorio contiene además archivos Handlebars (.hbs). Si se utilizan para el backend o plantillas del servidor, documentar su uso en la sección correspondiente.
+
 ## ✨ Características
 
-- **Diseño Responsive**: Adaptado a todos los dispositivos (móvil, tablet, desktop)
-- **Modo Claro/Oscuro**: Sistema de temas con persistencia en localStorage
-- **Galería Interactiva**: 
-  - Sistema de filtros por categorías
-  - Animaciones suaves al cambiar filtros
-  - Modal para visualización ampliada de imágenes
-  - Lazy loading de imágenes
+- **Diseño Responsive**: Adaptado a todos los dispositivos (móvil, tablet, desktop).
+- **Modo Claro/Oscuro**: Sistema de temas con persistencia en localStorage.
+- **Galería Interactiva**:
+  - Filtros por categorías.
+  - Animaciones suaves al cambiar filtros.
+  - Modal para visualización ampliada de imágenes.
+  - Lazy loading de imágenes.
 - **Animaciones Avanzadas**:
-  - Fade-in inteligente (aparición inmediata si el contenido está visible)
-  - Transiciones suaves entre secciones
-  - Efectos hover personalizados
-- **SEO Optimizado**: Meta tags dinámicos para cada página
-- **Timeline Interactivo**: Historia de la empresa con diseño visual atractivo
-- **Formulario de Contacto**: Validación de campos y experiencia de usuario mejorada
+  - Fade-in inteligente (aparición inmediata si el contenido está visible).
+  - Transiciones suaves entre secciones.
+  - Efectos hover personalizados.
+- **SEO Optimizado**: Meta tags dinámicos para cada página.
+- **Timeline Interactivo**: Historia de la empresa con diseño visual atractivo.
+- **Formulario de Contacto**: Validación de campos y experiencia de usuario mejorada.
 
 ## 🚀 Inicio Rápido
 
@@ -39,27 +39,40 @@ Sitio web moderno y responsive desarrollado con React que presenta los servicios
 - Node.js 14.x o superior
 - npm o yarn
 
-### Instalación
+### Instalación y ejecución (desarrollo)
+
+El repositorio está organizado en carpetas `frontend/` y `backend/`. Ejecuta los pasos en cada carpeta según lo que quieras levantar.
 
 1. Clona el repositorio:
+
 ```bash
-git clone https://github.com/lipicero/React.git
-cd React/frontend
+git clone https://github.com/lipicero/MCEstiloIndustrial.git
+cd MCEstiloIndustrial
 ```
 
-2. Instala las dependencias:
+2. Frontend (React):
+
 ```bash
+cd frontend
 npm install
-```
-
-3. Inicia el servidor de desarrollo:
-```bash
 npm start
 ```
 
-4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+- La aplicación frontend por defecto corre en http://localhost:3000.
 
-## 📁 Estructura del Proyecto
+3. Backend (si aplica):
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+- Revisa `backend/package.json` para los scripts disponibles. El backend por defecto en este proyecto suele escuchar en el puerto 3001 (comprueba `backend/src/bin/www` o la configuración correspondiente).
+
+Si el proyecto usa package.json por separado en frontend/backend, ejecuta los comandos dentro de cada carpeta. Si existe un package.json en la raíz con scripts de conveniencia, esos comandos estarán documentados allí.
+
+## 📁 Estructura del Proyecto (resumida)
 
 ```
 frontend/
@@ -85,20 +98,24 @@ frontend/
 │   │   ├── ContactoPage.js
 │   │   └── NotFoundPage.js
 │   ├── styles/
-│   │   └── components/       # CSS modular por componente
+│   │   └── components/       # CSS por componente (especificar si son CSS Modules/SCSS)
 │   ├── App.js
 │   └── index.js
 └── package.json
 ```
 
+Nota: Verifica que los archivos y rutas listados arriba coincidan exactamente con `frontend/src` del repositorio. Si se usan extensiones .jsx, .ts(x), SCSS o CSS Modules, actualiza la descripción.
+
 ## 🛠️ Tecnologías Utilizadas
 
-- **React 18**: Biblioteca principal
-- **React Router DOM**: Navegación SPA
-- **React Helmet Async**: Gestión de meta tags dinámicos
-- **CSS3**: Estilos con variables CSS y animaciones
-- **Intersection Observer API**: Animaciones al hacer scroll
-- **localStorage**: Persistencia de preferencias del usuario
+- **React 18** (frontend)
+- **React Router DOM**
+- **React Helmet Async**
+- **CSS3** (variables CSS, animaciones)
+- **Intersection Observer API**
+- **localStorage**
+- **Handlebars** (se detectaron archivos .hbs en el repo; posibles plantillas del backend)
+- **Node.js / Express** (posible backend si está presente)
 
 ## 📱 Páginas
 
@@ -137,23 +154,19 @@ frontend/
 
 ## 📦 Scripts Disponibles
 
-### `npm start`
-Ejecuta la aplicación en modo desarrollo en [http://localhost:3000](http://localhost:3000).
+Comprueba en cada `package.json` (root / frontend / backend) los scripts disponibles. Ejemplos típicos:
 
-### `npm run build`
-Construye la aplicación optimizada para producción en la carpeta `build`.
-
-### `npm test`
-Ejecuta los tests en modo interactivo.
-
-### `npm run eject`
-⚠️ **Operación irreversible**: Expone la configuración de Create React App.
+- `npm start` — Ejecuta la aplicación en modo desarrollo (ej.: frontend en 3000).
+- `npm run build` — Construye la aplicación optimizada para producción.
+- `npm test` — Ejecuta los tests (si existen).
+- `npm run eject` — ⚠️ Operación irreversible para apps creadas con Create React App.
 
 ## 🌐 Deploy
 
-Para construir y desplegar la aplicación:
+Para construir y desplegar el frontend:
 
 ```bash
+cd frontend
 npm run build
 ```
 
@@ -161,15 +174,17 @@ La carpeta `build` contendrá los archivos optimizados listos para producción.
 
 ### Keep-alive / evitar que Render duerma
 
-Se añadió un endpoint de estado (`/api/ping`) en el backend y un script `keepalive.js` en la carpeta `backend` para hacer peticiones HTTP de prueba. Para evitar que Render (o servicios similares) ponga la aplicación en estado inactivo, puedes configurar cualquiera de las siguientes opciones:
+Se añadió un endpoint de estado (`/api/ping`) en el backend y un script `keepalive.js` en la carpeta `backend` para hacer peticiones HTTP de prueba.
 
-- **Render Cron (recomendado):** Agrega un Cron Job en la dashboard de Render que ejecute `npm run keepalive:loop` en el servicio backend cada 5-10 minutos. Asegúrate de configurar `KEEP_ALIVE_URL` como la URL completa del backend en producción (por ejemplo `https://tu-app.onrender.com/api/ping`).
+Opciones para mantener el servicio despierto:
+
+- **Render Cron (recomendado):** Agrega un Cron Job en la dashboard de Render que ejecute `npm run keepalive:loop` en el servicio backend cada 5-10 minutos. Asegurate de configurar la variable de entorno `KEEP_ALIVE_URL` con la URL completa del endpoint (`https://tu-app.onrender.com/api/ping`).
+
 - **Servicio externo de ping:** Usa Uptime Robot, cron-job.org u otro servicio que haga peticiones a `https://tu-app.onrender.com/api/ping` cada X minutos.
-- **Ejecutarlo manualmente como script:** Ejecuta `npm run keepalive` en la carpeta `backend` para hacer una petición única.
 
-**Nota:** El servidor backend por defecto escucha en el puerto `3001` (revisa `backend/src/bin/www`). Si ejecutas `npm start` en local sin pasar `PORT`, la URL por defecto del ping será `http://localhost:3001/api/ping`. Si usas el puerto `3000` para el frontend o cualquier otro proceso, asegúrate de que `KEEP_ALIVE_URL` apunte al puerto correcto.
+- **Ejecutarlo manualmente como script:** Desde `backend/` podés ejecutar `npm run keepalive` para hacer una petición única.
 
-Si usas Render Cron, configúralo para ejecutar `npm run keepalive:loop` y establece la variable de entorno `KEEP_ALIVE_URL` con la URL del endpoint.
+**Nota:** Confirma los nombres exactos de los scripts en `backend/package.json` (`keepalive`, `keepalive:loop`, etc.) antes de configurar Cron o ejecutar localmente.
 
 ## 🤝 Contribuciones
 
@@ -181,8 +196,8 @@ Copyright © 2025 MC Estilo Industrial. Todos los derechos reservados.
 
 ## 📞 Contacto
 
-- **Sitio Web**: [mcestiloindustrial.com](https://mcestiloindustrial.vercel.app)
-- **Instagram**: [@mcestiloindustrial](https://www.instagram.com/mc_estilo.industrial)
+- **Sitio Web**: https://mcestiloindustrial.vercel.app
+- **Instagram**: https://www.instagram.com/mc_estilo.industrial
 
 ---
 
