@@ -1,190 +1,331 @@
 # MC Estilo Industrial 🏗️
 
-Sitio web corporativo para MC Estilo Industrial - Empresa dedicada a la fabricación de muebles y estructuras en hierro y madera con estilo industrial único.
+Aplicación web full-stack para MC Estilo Industrial - Empresa dedicada a la fabricación de muebles y estructuras en hierro y madera con estilo industrial único.
 
-![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat&logo=react) ![CSS3](https://img.shields.io/badge/CSS3-Responsive-1572B6?style=flat&logo=css3) ![Status](https://img.shields.io/badge/Status-Active-success)
+![React](https://img.shields.io/badge/React-18.x-61DAFB?style=flat&logo=react) ![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat&logo=node.js) ![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=flat&logo=mysql) ![Status](https://img.shields.io/badge/Status-Active-success)
 
 ## 📋 Descripción
 
-Sitio web moderno y responsive desarrollado principalmente con React que presenta los servicios, galería de proyectos y canales de contacto de MC Estilo Industrial. La empresa se especializa en:
+Aplicación web completa con frontend React y backend Node.js/Express que presenta los servicios, galería de proyectos administrable y canales de contacto de MC Estilo Industrial. La empresa se especializa en:
 
 - 🪑 Muebles de hierro y madera
 - 🚪 Portones personalizados
 - 🛡️ Rejas de seguridad
 - 🏗️ Estructuras metálicas
 
-Nota: el repositorio contiene además archivos Handlebars (.hbs). Si se utilizan para el backend o plantillas del servidor, documentar su uso en la sección correspondiente.
+### Arquitectura
+
+- **Frontend**: Aplicación de página única (SPA) en React con enrutamiento del lado del cliente
+- **Backend**: API REST en Node.js/Express con vistas de administración en Handlebars
+- **Base de Datos**: MySQL para gestión de usuarios y galería
+- **Almacenamiento**: Cloudinary para imágenes de la galería (con fallback a almacenamiento local)
+- **Email**: Integración con Resend para formulario de contacto
 
 ## ✨ Características
 
-- **Diseño Responsive**: Adaptado a todos los dispositivos (móvil, tablet, desktop).
-- **Modo Claro/Oscuro**: Sistema de temas con persistencia en localStorage.
-- **Galería Interactiva**:
-  - Filtros por categorías.
-  - Animaciones suaves al cambiar filtros.
-  - Modal para visualización ampliada de imágenes.
-  - Lazy loading de imágenes.
-- **Animaciones Avanzadas**:
-  - Fade-in inteligente (aparición inmediata si el contenido está visible).
-  - Transiciones suaves entre secciones.
-  - Efectos hover personalizados.
-- **SEO Optimizado**: Meta tags dinámicos para cada página.
-- **Timeline Interactivo**: Historia de la empresa con diseño visual atractivo.
-- **Formulario de Contacto**: Validación de campos y experiencia de usuario mejorada.
+### Frontend (Cliente)
+- **Diseño Responsive**: Adaptado a todos los dispositivos (móvil, tablet, desktop)
+- **Modo Claro/Oscuro**: Sistema de temas con persistencia en localStorage
+- **Galería Dinámica**:
+  - Carga de imágenes desde API del backend
+  - Filtros por categorías (Todos, Muebles, Portones, Rejas, Estructuras)
+  - Animaciones suaves al cambiar filtros
+  - Modal para visualización ampliada
+  - Lazy loading de imágenes
+- **SEO Optimizado**: Meta tags dinámicos para cada página
+- **Timeline Interactivo**: Historia de la empresa con diseño visual atractivo
+- **Formulario de Contacto**: 
+  - Validación de campos
+  - Integración con API backend para envío de emails
+  - Feedback visual de estado
+
+### Backend (Administración)
+- **Panel de Administración**:
+  - Sistema de autenticación con sesiones
+  - Gestión completa de galería (CRUD)
+  - Carga de imágenes a Cloudinary
+  - Vista de navegación con enlace al sitio web
+  - Tema claro/oscuro persistente
+- **API REST**:
+  - `/api/galeria` - Obtiene todas las imágenes de la galería
+  - `/api/contacto` - Procesa formulario de contacto y envía emails
+  - `/api/ping` - Endpoint de salud para keep-alive
+- **Seguridad**:
+  - Contraseñas hasheadas con bcrypt
+  - Sesiones persistentes en MySQL
+  - CORS configurado
+  - Protección de rutas administrativas
 
 ## 🚀 Inicio Rápido
 
 ### Prerrequisitos
 
 - Node.js 14.x o superior
+- MySQL 5.7 o superior
 - npm o yarn
+- (Opcional) Cuenta de Cloudinary para almacenamiento de imágenes
+- (Opcional) API key de Resend para envío de emails
 
-### Instalación y ejecución (desarrollo)
+### Configuración de la Base de Datos
 
-El repositorio está organizado en carpetas `frontend/` y `backend/`. Ejecuta los pasos en cada carpeta según lo que quieras levantar.
-
-1. Clona el repositorio:
+1. Crea una base de datos en MySQL:
 
 ```bash
-git clone https://github.com/lipicero/MCEstiloIndustrial.git
-cd MCEstiloIndustrial
+mysql -u root -p
+CREATE DATABASE mcei;
 ```
 
-2. Frontend (React):
+2. Importa el esquema:
 
 ```bash
-cd frontend
+mysql -u root -p mcei < database_setup.sql
+```
+
+Esto creará las tablas `users` y `galeria` con datos de ejemplo. El usuario admin por defecto es:
+- **Usuario**: `admin`
+- **Contraseña**: `admin` (¡cámbiala en producción!)
+
+### Instalación
+
+Opción 1 - **Ejecutar ambos servicios simultáneamente** (recomendado para desarrollo):
+
+```bash
+# Desde la raíz del proyecto
 npm install
 npm start
 ```
 
-- La aplicación frontend por defecto corre en http://localhost:3000.
+Esto instalará las dependencias del root y ejecutará frontend (puerto 3000) y backend (puerto 3001) concurrentemente.
 
-3. Backend (si aplica):
+Opción 2 - **Ejecutar servicios por separado**:
 
 ```bash
+# Terminal 1 - Frontend
+cd frontend
+npm install
+npm start
+
+# Terminal 2 - Backend
 cd backend
 npm install
 npm start
 ```
 
-- Revisa `backend/package.json` para los scripts disponibles. El backend por defecto en este proyecto suele escuchar en el puerto 3001 (comprueba `backend/src/bin/www` o la configuración correspondiente).
+### Variables de Entorno (Backend)
 
-Si el proyecto usa package.json por separado en frontend/backend, ejecuta los comandos dentro de cada carpeta. Si existe un package.json en la raíz con scripts de conveniencia, esos comandos estarán documentados allí.
+Crea un archivo `.env` en la carpeta `backend/` con las siguientes variables:
 
-## 📁 Estructura del Proyecto (resumida)
+```env
+# Base de datos MySQL
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=tu_password
+DB_DATABASE=mcei
+DB_PORT=3306
 
-```
-frontend/
-├── public/
-│   ├── img/
-│   │   └── galeria/          # Imágenes de proyectos
-│   ├── index.html
-│   └── manifest.json
-├── src/
-│   ├── components/
-│   │   ├── layout/           # Componentes de estructura
-│   │   │   ├── Header.js
-│   │   │   ├── Nav.js
-│   │   │   ├── Footer.js
-│   │   │   └── ThemeToggle.js
-│   │   └── SEO.js            # Componente de SEO
-│   ├── contexts/
-│   │   └── ThemeContext.js   # Context API para temas
-│   ├── pages/
-│   │   ├── HomePage.js
-│   │   ├── NosotrosPage.js
-│   │   ├── GaleriaPage.js
-│   │   ├── ContactoPage.js
-│   │   └── NotFoundPage.js
-│   ├── styles/
-│   │   └── components/       # CSS por componente (especificar si son CSS Modules/SCSS)
-│   ├── App.js
-│   └── index.js
-└── package.json
+# Sesión
+SESSION_SECRET=tu_secreto_aleatorio_seguro
+
+# Cloudinary (opcional - si no se configura, usa almacenamiento local)
+CLOUDINARY_CLOUD_NAME=tu_cloud_name
+CLOUDINARY_API_KEY=tu_api_key
+CLOUDINARY_API_SECRET=tu_api_secret
+
+# Resend (opcional - para envío de emails)
+RESEND_API_KEY=tu_resend_api_key
+RESEND_FROM=onboarding@resend.dev
+
+# Keep-alive (para producción)
+KEEP_ALIVE_URL=https://tu-app.onrender.com/api/ping
+
+# Entorno
+NODE_ENV=development
 ```
 
-Nota: Verifica que los archivos y rutas listados arriba coincidan exactamente con `frontend/src` del repositorio. Si se usan extensiones .jsx, .ts(x), SCSS o CSS Modules, actualiza la descripción.
+## 📁 Estructura del Proyecto
+
+```
+MCEstiloIndustrial/
+├── frontend/                    # Aplicación React (SPA)
+│   ├── public/
+│   │   └── img/galeria/        # Imágenes locales de galería (fallback)
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── layout/         # Header, Nav, Footer, ThemeToggle
+│   │   │   └── SEO.js          # Componente de SEO
+│   │   ├── contexts/
+│   │   │   └── ThemeContext.js # Gestión de tema claro/oscuro
+│   │   ├── pages/              # HomePage, NosotrosPage, GaleriaPage, ContactoPage
+│   │   ├── config/
+│   │   │   └── api.js          # Configuración de URLs de API
+│   │   └── App.js              # Router principal
+│   └── package.json
+│
+├── backend/                     # API REST + Panel Admin
+│   ├── src/
+│   │   ├── bin/
+│   │   │   └── www             # Punto de entrada del servidor
+│   │   ├── models/             # Modelos de BD (galeria, users)
+│   │   ├── routes/
+│   │   │   ├── api.js          # Endpoints REST (/api/*)
+│   │   │   ├── galeria.js      # Rutas admin de galería
+│   │   │   └── login.js        # Autenticación
+│   │   ├── views/              # Plantillas Handlebars (.hbs)
+│   │   │   ├── layout.hbs      # Layout principal admin
+│   │   │   ├── login.hbs       # Página de login
+│   │   │   ├── galeria.hbs     # Lista de galería admin
+│   │   │   ├── galeria_agregar.hbs
+│   │   │   └── galeria_modificar.hbs
+│   │   ├── utils/
+│   │   │   └── renderEmailContacto.js  # Plantilla de email
+│   │   └── app.js              # Configuración Express
+│   ├── keepalive.js            # Script para evitar que Render duerma
+│   └── package.json
+│
+├── database_setup.sql           # Esquema de base de datos
+├── package.json                 # Scripts de conveniencia (root)
+└── README.md
+```
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **React 18** (frontend)
-- **React Router DOM**
-- **React Helmet Async**
-- **CSS3** (variables CSS, animaciones)
-- **Intersection Observer API**
-- **localStorage**
-- **Handlebars** (se detectaron archivos .hbs en el repo; posibles plantillas del backend)
-- **Node.js / Express** (posible backend si está presente)
+### Frontend
+- **React 18.3** - Biblioteca de UI
+- **React Router DOM 6** - Enrutamiento del lado del cliente
+- **React Helmet Async** - Gestión de meta tags
+- **Axios** - Cliente HTTP para llamadas a API
+- **Vercel Analytics** - Analytics de producción
+- **CSS3** - Estilos con variables CSS y animaciones
+- **Intersection Observer API** - Lazy loading y animaciones
 
-## 📱 Páginas
+### Backend
+- **Node.js** - Runtime de JavaScript
+- **Express 5** - Framework web
+- **MySQL2** - Driver de base de datos
+- **bcrypt** - Hashing de contraseñas
+- **express-session** - Gestión de sesiones
+- **express-mysql-session** - Almacenamiento de sesiones en MySQL
+- **Handlebars (hbs)** - Motor de plantillas para vistas admin
+- **Cloudinary** - Almacenamiento en la nube de imágenes
+- **Resend** - Servicio de envío de emails
+- **CORS** - Manejo de peticiones cross-origin
+- **express-fileupload** - Carga de archivos
+- **dotenv** - Variables de entorno
 
-### Home
+## 📱 Páginas Frontend
+
+### 🏠 Home (`/`)
 - Hero section con presentación
 - Beneficios destacados
-- Carousel de proyectos
+- Proyectos destacados
 
-### Nosotros
+### 👥 Nosotros (`/nosotros`)
 - Historia visual con timeline
 - Estadísticas de la empresa
 - Perfil del fundador
 - Valores corporativos
 - Servicios ofrecidos
 
-### Galería
-- Sistema de filtros (Todos, Muebles, Portones, Rejas, Estructuras)
-- Grid responsive
-- Modal de visualización
+### 🖼️ Galería (`/galeria`)
+- Carga dinámica desde API backend
+- Sistema de filtros por categoría
+- Grid responsive con animaciones
+- Modal de visualización ampliada
 - Lazy loading de imágenes
-- Animaciones al cambiar filtros
 
-### Contacto
-- Formulario de contacto
+### 📧 Contacto (`/contacto`)
+- Formulario integrado con API
+- Validación de campos
 - Información de ubicación
 - Enlaces a redes sociales
-- Datos de contacto directo
+- Envío de emails vía Resend
 
-## 🎨 Características de Diseño
+## 🔐 Panel de Administración (Backend)
 
-- **Paleta de Colores**: Tonos industriales (grises, carbón, acentos madera)
-- **Tipografía**: Roboto (sans-serif moderno)
-- **Animaciones**: Transiciones suaves y naturales
-- **Accesibilidad**: Contraste adecuado y navegación por teclado
-- **Performance**: Lazy loading y optimización de recursos
+Accede al panel admin en `http://localhost:3001/admin/login`
+
+### Funcionalidades
+- **Login**: `/admin/login` - Autenticación de usuarios
+- **Galería**: `/admin/galeria` - Gestión completa (listar, agregar, modificar, eliminar)
+- **Carga de Imágenes**: Soporte para Cloudinary o almacenamiento local
+- **Tema**: Toggle claro/oscuro con persistencia en sesión
+- **Logout**: Cierre de sesión seguro
+
+### Credenciales por Defecto
+- Usuario: `admin`
+- Contraseña: `admin`
+
+> ⚠️ **Importante**: Cambia estas credenciales en producción actualizando el hash bcrypt en la base de datos.
 
 ## 📦 Scripts Disponibles
 
-Comprueba en cada `package.json` (root / frontend / backend) los scripts disponibles. Ejemplos típicos:
+### Raíz del Proyecto
+- `npm start` - Ejecuta frontend y backend concurrentemente
 
-- `npm start` — Ejecuta la aplicación en modo desarrollo (ej.: frontend en 3000).
-- `npm run build` — Construye la aplicación optimizada para producción.
-- `npm test` — Ejecuta los tests (si existen).
-- `npm run eject` — ⚠️ Operación irreversible para apps creadas con Create React App.
+### Frontend
+- `npm start` - Inicia servidor de desarrollo (puerto 3000)
+- `npm run build` - Construye para producción
+
+### Backend
+- `npm start` - Inicia servidor (puerto 3001)
+- `npm run dev` - Inicia con nodemon (recarga automática)
+- `npm run keepalive` - Ping único al endpoint `/api/ping`
+- `npm run keepalive:loop` - Ping continuo cada 5 minutos
 
 ## 🌐 Deploy
 
-Para construir y desplegar el frontend:
+### Frontend (Vercel/Netlify)
 
 ```bash
 cd frontend
 npm run build
 ```
 
-La carpeta `build` contendrá los archivos optimizados listos para producción.
+Despliega la carpeta `build/` en Vercel, Netlify u otro hosting estático.
 
-### Keep-alive / evitar que Render duerma
+Configura variables de entorno:
+- `REACT_APP_API_URL` - URL de tu backend en producción
 
-Se añadió un endpoint de estado (`/api/ping`) en el backend y un script `keepalive.js` en la carpeta `backend` para hacer peticiones HTTP de prueba.
+### Backend (Render/Railway/Heroku)
 
-Opciones para mantener el servicio despierto:
+1. Configura todas las variables de entorno en tu plataforma
+2. Asegúrate de que la base de datos MySQL esté accesible
+3. El backend escucha en el puerto definido por `process.env.PORT` o 3001
 
-- **Render Cron (recomendado):** Agrega un Cron Job en la dashboard de Render que ejecute `npm run keepalive:loop` en el servicio backend cada 5-10 minutos. Asegurate de configurar la variable de entorno `KEEP_ALIVE_URL` con la URL completa del endpoint (`https://tu-app.onrender.com/api/ping`).
+### Keep-alive (Evitar que Render duerma)
 
-- **Servicio externo de ping:** Usa Uptime Robot, cron-job.org u otro servicio que haga peticiones a `https://tu-app.onrender.com/api/ping` cada X minutos.
+Render.com pone a dormir las aplicaciones gratuitas tras inactividad. Para evitarlo:
 
-- **Ejecutarlo manualmente como script:** Desde `backend/` podés ejecutar `npm run keepalive` para hacer una petición única.
+**Opción 1 - Cron Job de Render (Recomendado)**:
+- Crea un Cron Job en Render
+- Comando: `npm run keepalive:loop`
+- Frecuencia: Cada 5-10 minutos
 
-**Nota:** Confirma los nombres exactos de los scripts en `backend/package.json` (`keepalive`, `keepalive:loop`, etc.) antes de configurar Cron o ejecutar localmente.
+**Opción 2 - Servicio externo**:
+- Configura [UptimeRobot](https://uptimerobot.com) o [cron-job.org](https://cron-job.org)
+- Programa peticiones GET a `https://tu-app.onrender.com/api/ping`
+- Frecuencia: Cada 5 minutos
+
+## 🎨 Características de Diseño
+
+- **Paleta de Colores**: Tonos industriales (grises, carbón, acentos madera)
+- **Tipografía**: Roboto (sans-serif moderno)
+- **Animaciones**: Transiciones suaves y naturales con CSS
+- **Accesibilidad**: Contraste adecuado y navegación por teclado
+- **Performance**: 
+  - Lazy loading de imágenes
+  - Code splitting en React
+  - Optimización de recursos
+  - Compresión de imágenes en Cloudinary
+
+## 🔒 Seguridad
+
+- Contraseñas hasheadas con bcrypt (factor 10)
+- Sesiones seguras almacenadas en MySQL
+- CORS configurado para dominios específicos
+- Validación de entrada en formularios
+- Protección de rutas administrativas
+- Variables sensibles en `.env` (no versionadas)
 
 ## 🤝 Contribuciones
 
@@ -198,7 +339,8 @@ Copyright © 2025 MC Estilo Industrial. Todos los derechos reservados.
 
 - **Sitio Web**: https://mcestiloindustrial.vercel.app
 - **Instagram**: https://www.instagram.com/mc_estilo.industrial
+- **Email**: matiascerolenii@gmail.com
 
 ---
 
-Desarrollado con ❤️ por el equipo de MC Estilo Industrial
+Desarrollado con ❤️ para MC Estilo Industrial
